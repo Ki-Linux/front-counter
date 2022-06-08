@@ -191,7 +191,14 @@ export default class change_profile extends Vue {
 }
 </script>
 <style lang="scss">
+@mixin sp {
+  @media (max-width: 560px) {
+    @content;
+  }
+}
+
 #change_profile {
+
     .title {
         text-align: center;
         padding: 30px 0;
@@ -244,6 +251,11 @@ export default class change_profile extends Vue {
             transform: translateX(-50%);
             background-color: rgb(255, 244, 206);
             padding: 20px;
+            @include sp {
+                margin-left: 0%;
+                transform: translateX(0%);
+                margin:0 5px 0 7px;
+            }
             .comment {
                 margin: 60px auto;
                 width: 300px;

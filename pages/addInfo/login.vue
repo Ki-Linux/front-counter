@@ -100,6 +100,8 @@ export default class login extends Vue {
     }
     .title h1 {
         padding-top: 30px;
+        font-size: 40px;
+        color:rgb(121, 121, 121);
     }
     .name_space {
         margin: 30px 0;
@@ -125,6 +127,10 @@ export default class login extends Vue {
             color: blue;
         }
         
+    }
+
+    label {
+        color:rgb(85, 85, 85);
     }
 }
 </style>

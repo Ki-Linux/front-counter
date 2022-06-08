@@ -54,15 +54,11 @@
         background-color: rgba(255, 0, 0, 0.253);
         padding-top: 50px;
         
-        input {
-            display: block;
-            margin: 0 auto;
-            width: 50%;
-            &:first-of-type {
-                font-size: 50px;
-            }
-            &:nth-of-type(2) {
-                font-size: 16px;
+        .count button {
+            
+            &:nth-of-type(3) {
+                margin-top: 10px;
+                -webkit-appearance: none;
             }
             
         }

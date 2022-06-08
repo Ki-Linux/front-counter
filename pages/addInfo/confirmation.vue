@@ -57,6 +57,7 @@ export default class confirmation extends Vue {
         }
         input[type="submit"] {
             -webkit-appearance: none;
+            background-color: rgb(197, 197, 197);
         }
     }
 }

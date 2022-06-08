@@ -4,7 +4,7 @@
             <phone_description @ok_click="OKClick"/>
         </div>
         <div class="pop_up" v-if="show_pop">
-           <pop_up v-if="show_pop" @pop_up_show="popShow"/>
+           <pop_up class="pop" v-if="show_pop" @pop_up_show="popShow"/>
         </div>
         <reminder_name/>
         <profile_name/>
@@ -28,9 +28,7 @@
                 </li>
             </ul>
         </div>
-        <div class="back_home">
-          <back_home where_go="home"/>
-        </div>
+        
         <div class="option">
             <ul>
                 <li>
@@ -44,6 +42,9 @@
                   </nuxt-link>
                 </li>
             </ul>
+        </div>
+        <div class="back_home">
+          <back_home where_go="home"/>
         </div>
     </div>
 </template>
@@ -99,21 +100,16 @@ export default class myname extends Vue {
 }
 </script>
 <style lang="scss">
+@mixin sp {
+    @media (max-width: 560px) {
+      @content;
+    }
+  }
+
 li {
     list-style: none;
 }
-.option {
-  font-size: 25px;
-  
-  ul li {
-    
-    padding: 10px 0;
-    .editor {
-      color: rgb(0, 62, 73);
-      text-decoration: none;
-    }
-  }
-}
+
  .to_album {
     float: left;
     margin: 20px 0 0 40px;
@@ -131,6 +127,11 @@ li {
       margin-right: 20px;
       background-color: rgb(236, 236, 236);
       color: rgb(29, 104, 0);
+
+      @include sp {
+        margin-top:20px;
+        font-size: 25px;
+      }
     
     }
     ul li {
@@ -143,11 +144,37 @@ li {
         color: rgb(0, 0, 104);
         font-weight: bold;
       }
+
+      @include sp {
+
+        padding: 20px;
+        font-size: 25px;
+      }
     }
     
 }
+
+.option {
+  font-size: 25px;
+  
+  ul li {
+    
+    padding: 10px 0;
+    .editor {
+      color: rgb(0, 62, 73);
+      text-decoration: none;
+    }
+  }
+}
+
 .back_home {
+  position: relative;
   float: right;
+  margin-top: -140px;
   padding: 30px;
+  @include sp {
+
+    margin-top: -50px;
+  }
 }
 </style>

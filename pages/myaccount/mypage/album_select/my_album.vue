@@ -1,4 +1,3 @@
-
 <template>
     <div id="my_album">
         <div class="back_data">
@@ -113,6 +112,12 @@ export default class my_album extends Vue {
 }
 </script>
 <style lang="scss">
+    @mixin sp {
+        @media (max-width: 560px) {
+            @content;
+        }
+    }
+
     #my_album {
         
         width: 900px;
@@ -120,6 +125,11 @@ export default class my_album extends Vue {
         margin: 20px auto;
         text-align: center;
         padding-bottom: 50px;
+
+        @include sp {
+            width: 90%;
+        }
+        
         .back_data {
             float: left;
             padding: 20px 0 0 20px;
@@ -137,10 +147,19 @@ export default class my_album extends Vue {
                margin-left: 50%;
                transform: translateX(-50%);
             }
+
+            @include sp {
+                width: 90%;
+            }
         }
         .all_box {
             width: 50%;
             border-left: 1px solid red;
+
+            @include sp {
+                width: 90%;
+            }
+
             .check_batu {
                 cursor: default;
                 float: left;
@@ -170,6 +189,11 @@ export default class my_album extends Vue {
                 height: 400px;
                 border-bottom: 1px solid red;
                 border-right: 1px solid red;
+
+                @include sp {
+                    width: 280px;
+                    height: 380px;
+                }
                 .target_present {
                     padding-top: 40px;
                     p {

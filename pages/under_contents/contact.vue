@@ -72,6 +72,7 @@ export default class contract extends Vue {
         }
         &[type="submit"] {
             -webkit-appearance: none;
+            background-color: rgb(212, 212, 212);
             display: block;
             margin-top: 20px;
             margin-left: 50%;

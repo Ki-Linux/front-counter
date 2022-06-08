@@ -17,9 +17,9 @@
             </div>
             <div class="new_password" v-else-if="show_info[1]">
             <form @submit.prevent="CheckChangePassword('change')"  v-if="!success_change_password">
-                <p>パスワード変更(7 ~ 14文字)</p>
+                <p>パスワード変更<br>(7 ~ 14文字)</p>
                 <input type="text" v-model="new_password" name="password" minlength="7" maxlength="14" required>
-                <p>もう一度パスワードを入力(7 ~ 14文字)</p>
+                <p>もう一度パスワードを入力<br>(7 ~ 14文字)</p>
                 <input type="password" v-model="confirm_password" name="password_again" minlength="7" maxlength="14" required>
                 <input type="submit">
                 <p v-if="inconsistency">パスワードが一致しません</p>
@@ -266,6 +266,11 @@ export default class optionMyData extends Vue {
 }
 </script>
 <style lang="scss">
+@mixin sp {
+  @media (max-width: 560px) {
+    @content;
+  }
+}
 #option_my_data {
     .password_show {
         position: absolute;
@@ -283,13 +288,27 @@ export default class optionMyData extends Vue {
             input {
                 padding: 5px;
                 display: block;
-                margin: 10px 0 30px 50px;
+                
+                margin: 10px 0 30px 50%;
+                transform: translateX(-50%);
+                @include sp {
+                    margin-left: 0%;
+                    transform: translateX(0);
+                }
+
                 &[type="submit"] {
                     -webkit-appearance: none;
-                    margin-left: 180px;
+                    background-color: rgb(197, 197, 197);
+                    
                 }
+
             }
             
+        }
+    }
+    @include sp {
+        .new_password form > p {
+            padding-right: 140px;
         }
     }
     .reminder_option {
@@ -310,6 +329,11 @@ export default class optionMyData extends Vue {
     .contents {
         position: absolute;
         left: 300px;
+        padding-right: 30px;
+        @include sp {
+            width: 350px;
+            padding-right: 10px;
+        }
         .account_info {
             text-align: center;
             ul {

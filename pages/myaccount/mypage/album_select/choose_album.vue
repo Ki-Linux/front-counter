@@ -186,16 +186,25 @@ export default class chooseAlbum extends Vue {
 }
 </script>
 <style lang="scss">
+@mixin sp {
+  @media (max-width: 560px) {
+    @content;
+  }
+}
+
 #all_select_img {
     text-align: center;
     padding: 50px 0;
     .to_next {
         
-       padding-right: 30px;
         .not_album {
             float: right;
             font-size: 20px;
-            
+            padding-right: 30px;
+        }
+
+         @include sp {
+            padding:0 10px;
         }
     }
     .title_desc {

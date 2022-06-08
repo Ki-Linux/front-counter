@@ -70,6 +70,7 @@
         text-align: center;
         
         button {
+            -webkit-appearance: none;
             margin-top: 30px;
             padding: 10px 20px;
             font-size: 25px;

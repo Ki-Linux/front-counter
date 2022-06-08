@@ -105,6 +105,7 @@ export default class Home extends Vue{
     .catch((response) => {
       console.log(response);
     });
+
   }
   mounted() {
     //localStorageのデータを削除
@@ -194,6 +195,10 @@ export default class Home extends Vue{
       &:hover {
         background-color: rgba(17, 63, 75, 0.76);
       }
+
+      @include sp {
+        font-size: 15px;
+      }
     }
     p {
       color: white;
@@ -247,7 +252,7 @@ export default class Home extends Vue{
         font-size: 55px;
         color: rgba(48, 48, 48, 0.9);
         @include sp {
-          font-size: 40px;
+          font-size: 30px;
         }
         span:first-of-type {
           color: rgba(255, 41, 41, 0.8);
@@ -260,6 +265,10 @@ export default class Home extends Vue{
         margin: 110px;
         border: 3px double #ddd;
         padding: 20px;
+        @include sp {
+          margin: 20px;
+          
+        }
         h2 {
           font-size: 30px;
           @include sp {
@@ -312,6 +321,10 @@ export default class Home extends Vue{
           padding: 30px 0;
           float: left;
           width: 50%;
+          @include sp {
+            padding: 30px 5px;
+          
+          }
         }
         
       }

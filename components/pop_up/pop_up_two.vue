@@ -37,6 +37,12 @@ export default class popUpTwo extends Vue {
 }
 </script>
 <style lang="scss">
+@mixin sp {
+  @media (max-width: 560px) {
+    @content;
+  }
+}
+
 #pop_up_two {
     position: absolute;
     background-color: rgb(177, 255, 167);
@@ -46,6 +52,14 @@ export default class popUpTwo extends Vue {
     transform: translate(-50%, -50%);
     text-align: center;
     padding: 20px 30px 30px 30px;
+    z-index: 10;
+
+    @include sp {
+        width: 90%;
+        top: 60%;
+        left: 50%;
+    }
+
     .desc_and_close {
         p {
             &:first-of-type {

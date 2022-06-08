@@ -70,7 +70,7 @@ export default class profile extends Vue {
                 background-color: rgb(199, 199, 199);
             }
             p:nth-of-type(2) {
-                font-size: 2vw;
+                font-size: 20px;
                 text-align: center;
                 background-color: rgb(241, 241, 241);
             }

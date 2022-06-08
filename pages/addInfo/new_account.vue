@@ -89,6 +89,10 @@ export default class newAccount extends Vue {
     text-align: center;
     .title {
         margin-top: 30px;
+        h1 {
+            font-size: 40px;
+            color:rgb(121, 121, 121);
+        }
     }
     .label_height {
         margin: 30px;
@@ -100,9 +104,13 @@ export default class newAccount extends Vue {
         input[type="submit"] {
             -webkit-appearance: none;
             color: rgb(36, 36, 36);
-            background-color: rgba(204, 204, 204, 0.6);
+            background-color: rgb(197, 197, 197);
             margin-bottom: 20px;
         }
+    }
+
+    label {
+        color:rgb(85, 85, 85);
     }
 }
 </style>

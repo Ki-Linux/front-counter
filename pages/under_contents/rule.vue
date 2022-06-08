@@ -130,6 +130,7 @@ export default class Rule extends Vue {
     .privacy_policy {
         h1 {
             padding-left: 10px;
+            font-size: 27px;
         }
         ul li {
             padding: 10px 0;

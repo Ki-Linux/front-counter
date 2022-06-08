@@ -32,7 +32,7 @@ export default class completeOption extends Vue {
         font-size: 50px;
         text-align: center;
         button {
-            width: 50%;
+
             background-color: rgba(245, 245, 245, 0.7);
         }
         .Light_up {

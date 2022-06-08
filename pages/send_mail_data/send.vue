@@ -24,9 +24,11 @@ export default class send extends Vue {
 <style lang="scss">
 #send {
     text-align: center;
-    font-size: 20px;
+    font-size: 18px;
     padding-top: 40px;
     button {
+        -webkit-appearance: none;
+        background-color: rgb(197, 197, 197);
         margin-top: 20px;
     }
 }

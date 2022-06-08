@@ -363,6 +363,11 @@ toNext(row: [string, number, number, string]): void {
 }
 </script>
 <style lang="scss">
+    @mixin tb {
+        @media (max-width: 900px) {
+            @content;
+        }
+    }
     html { /*背景色*/
         background-color: #09eea999;
     }
@@ -421,16 +426,35 @@ toNext(row: [string, number, number, string]): void {
                 transform: translateX(-50%);
                 color: white;
                 background-color: rgba(0, 0, 0, 0.7);
+                @include tb {
+                    width: 100%;
+                    margin-left: 0px;
+                    transform: translateX(0%);
+                }
+
                 ul li {
                     width: 220px;
                     background-color: rgba(0, 255, 255, 0.7);
                     margin-right: 2rem;
+
+                    @include tb {
+                        width: 130px;
+                    
+                    }
                     
                 }
                 
             }
             .text_write_in {
                 margin-left: 2rem;
+
+                input {
+                    @include tb {
+                        width: 320px;
+                    
+                    }
+                }
+                
             }
             .picture_show {
                 width: 890px;
@@ -439,6 +463,13 @@ toNext(row: [string, number, number, string]): void {
                 flex-wrap: wrap;
                 margin-left: 50%;
                 transform: translateX(-50%);
+
+                @include tb {
+                    width: 100%;
+                    margin-left: 0px;
+                    transform: translateX(0%);
+                }
+
                 img {
                     width: 110px;
                     display: inline;
@@ -446,7 +477,7 @@ toNext(row: [string, number, number, string]): void {
                 } 
             }
             .button_select {
-                margin-top: 20px;
+                margin-top: 40px;
             }
         } 
         .end_button {
@@ -455,6 +486,7 @@ toNext(row: [string, number, number, string]): void {
                 color: red;
             }
             button {/*ボタン*/
+                -webkit-appearance: none;
                 margin: 50px 0 60px;
                 font-size: 20px;
                 padding: 7px 20px;

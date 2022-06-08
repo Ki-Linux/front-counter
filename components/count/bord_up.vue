@@ -77,6 +77,12 @@
     }
 </script>
 <style lang="scss">
+    @mixin tb {
+        @media (max-width: 900px) {
+            @content;
+        }
+    }
+
     #bord_up {
         width: 70vw;
         height: 100vh;
@@ -121,13 +127,23 @@
                 color: white;
                 list-style: none;
                 float: left;
+
+                @include tb {
+                    font-size: 15px;
+                }
                 
                 li:first-of-type {
+                    margin-top: 20px;
+                    margin-right: 20px;
                     
                     img {
                         background-color: rgba(255, 255, 255, 0.8);
                         width: 100px;
                         display: inline;
+                        @include tb {
+                            
+                            width: 60px;
+                        }
                     }
                     
                 }

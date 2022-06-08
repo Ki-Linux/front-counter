@@ -140,6 +140,12 @@ export default class reminder extends Vue {
 }
 </script>
 <style lang="scss">
+@mixin sp {
+  @media (max-width: 560px) {
+    @content;
+  }
+}
+
 .right_position {
     padding: 20px;
     text-align: right;
@@ -168,6 +174,12 @@ export default class reminder extends Vue {
             margin-right: 20px;
             background-color: rgba(233, 233, 233, 0.7);
             padding: 3px 10px;
+            @include sp {
+                position: relative;
+                top:80px;
+                left: 80px;
+                font-size: 20px;
+            }
         }
         button, p {
             float: right;     
@@ -229,7 +241,7 @@ export default class reminder extends Vue {
     .detail_content {
         z-index: 10;
         position: fixed;
-        width: 40%;
+        width: 420px;//40%;
         height: 80%;
         background-color: rgb(206, 206, 255);
         top: 50%;
@@ -238,25 +250,43 @@ export default class reminder extends Vue {
         padding: 20px 30px;
         overflow-wrap: normal;
         text-align: left;
+
+        @include sp {
+            width: 80%;
+            height: 50%;
+            font-size: 25px;
+        }
+
         label {
             font-size: 30px;
             position: fixed;
             right: 30px;
         }
+
         h1 {
-            font-size: 20px;
+            font-size: 30px;
             float: left;
             padding: 40px;
+
+            @include sp {
+                font-size: 15px;
+            }
+
         }
          
         ul li {
             margin-right: 3rem;
+            font-size: 20px;
             &:first-of-type {
                 border-bottom: 3px solid black;
                 padding: 100px 0px;
             }
             &:nth-of-type(2) {
                 float: right;
+            }
+
+            @include sp {
+                font-size: 15px;
             }
         }
         
