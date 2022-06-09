@@ -317,9 +317,6 @@ export default class edit extends Vue {
 }
 </script>
 <style lang="scss">
-html {
-    background-color: rgba(255, 225, 225, 0.7);
-}
 #edit {
     form {
         .img_selector {
@@ -379,7 +376,7 @@ html {
             float: right;
             padding: 10px 20px 10px;
             button {
-                background-color: white;
+                background-color: rgb(233, 233, 233);
                 &[type="submit"] {
                     font-size: 30px;
                     padding: 3px 20px;

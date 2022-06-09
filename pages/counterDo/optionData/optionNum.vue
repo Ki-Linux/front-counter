@@ -348,6 +348,9 @@ toNext(row: [string, number, number, string]): void {
         });
         console.log(this.words_data);
         this.$router.push('/counterDo/counter_this/countNum?name=' + url_name);
+        setTimeout(() => {
+            location.reload();
+        },3000);
     }
     if(this.save_storage[0] === "＞") {
         if(typeof(this.save_storage[1]) === "number" && typeof(this.save_storage[2]) === "number") {
