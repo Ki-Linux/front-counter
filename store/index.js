@@ -14,7 +14,6 @@ export const state = () => ({
     username: "",
     canClick: true,//クリックできるか
     select_plan: "",
-    show_phone: false,//携帯横向き
 });
 
 
@@ -198,11 +197,6 @@ export const mutations = {
 
     },
 
-    changePhone(state) {//携帯横向きの表示
-
-        state.show_phone = false;
-    },
-
     deleteContents(state, content) {
 
         if(content === "many") {
@@ -295,12 +289,6 @@ export const actions = {
     inSelectData(context, send_array) {
 
         context.commit("inSelectData", send_array);
-    },
-
-    change_phone(context) {
-
-        context.commit("changePhone");
-
     },
 
     delete_contents(context, delete_data) {

@@ -1,8 +1,5 @@
 <template>
     <div id="login_select">
-        <div class="instruct_incline" v-if="show_phone_desc">
-            <phone_description @ok_click="OKClick"/>
-        </div>
         <div class="select_button" :class="{ styleClass: index === 0, styleClassBottom: index == 1 }" v-for="(selector, index) in selectors" :key="selector.description">
             <p>{{ selector.description }}</p>
             <button @click="toPage(index)">
@@ -13,14 +10,9 @@
 </template>
 <script lang="ts">
     import { Vue, Component } from 'nuxt-property-decorator';
-    import phoneDescription from '@/components/phone/description.vue';
-    @Component({
-        components: {
-            'phone_description': phoneDescription
-        }
-    })
+
+    @Component
     export default class loginSelect extends Vue {
-        show_phone_desc: boolean = true;
         selectors: { description: string; url_button: string; } [] =  [
             {
                 description: "マイページからカウントや投稿ができます。",
@@ -39,10 +31,6 @@
                 ]
             }
             
-        }
-        OKClick(ok_click: boolean) {
-            this.show_phone_desc = ok_click;
-            console.log(ok_click);
         }
         toPage(index: number) {
             const to_url = (url: string) => {

@@ -1,6 +1,9 @@
 
 <template>
     <div id="edit">
+        <div class="instruct_incline" v-if="show_phone_desc">
+            <phone_description @ok_click="OKClick"/>
+        </div>
         <form @submit.prevent="dataSend">
             <div class="sub_button">
                 <button type="button" @click="stopPost">{{ button_name }}をやめる</button>
@@ -53,10 +56,16 @@
 import { Vue, Component } from 'vue-property-decorator';
 import { AxiosRequestConfig } from 'axios';
 import { confirm } from '@/components/confirmation/confirm_person';
+import phoneDescription from '@/components/phone/description.vue';
+
 @Component({
-    middleware: 'reject'
+    middleware: 'reject',
+    components: {
+        'phone_description': phoneDescription
+    }
 })
 export default class edit extends Vue {
+    show_phone_desc: boolean = true;
     url: string = "notImg";//データベースへ送るURL
     storage_image: any;//storageへ送るURL
     show_url: string|ArrayBuffer|null = require("@/static/edit/hatena.png");//示すurl
@@ -147,6 +156,10 @@ export default class edit extends Vue {
                 console.log(err);
             })
         }
+    }
+    OKClick(ok_click: boolean) {
+        this.show_phone_desc = ok_click;
+        console.log(ok_click);
     }
     shiftImg(img_num: number) {
         const select_data = this.$store.state.back_select_data;

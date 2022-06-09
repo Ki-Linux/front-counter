@@ -1,5 +1,8 @@
 <template>
     <div class="first_option">
+        <div class="instruct_incline" v-if="show_phone_desc">
+            <phone_description @ok_click="OKClick"/>
+        </div>
         <h1>設定</h1>
         <div class="desc">
             <ul>
@@ -93,8 +96,15 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
 import { confirm } from '@/components/confirmation/confirm_person';
-@Component
+import phoneDescription from '@/components/phone/description.vue';
+
+@Component({
+    components: {
+        'phone_description': phoneDescription
+    }
+})
 export default class Option extends Vue {
+    show_phone_desc: boolean = true;
     target_presents: string[] = ["目標値", "現在値"];
     select_numbers: {target: number, present: number}[] = [{target: 0, present: 0}];
     images: string[] = ["写真", "文字", "なし"];
@@ -142,6 +152,10 @@ created(): void{//選択の数字
     const plan = this.$route.query.select;
     this.$store.dispatch("planSelect_arrayDelete", plan);
     console.log(this.imgs_data);
+}
+OKClick(ok_click: boolean) {
+    this.show_phone_desc = ok_click;
+    console.log(ok_click);
 }
 downUp(which_is: number): void {
     if(which_is == 1) {

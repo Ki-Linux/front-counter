@@ -1,8 +1,5 @@
 <template>
     <div id="myname">
-        <div class="instruct_incline" v-if="show_phone_desc && $store.state.show_phone">
-            <phone_description @ok_click="OKClick"/>
-        </div>
         <div class="pop_up" v-if="show_pop">
            <pop_up class="pop" v-if="show_pop" @pop_up_show="popShow"/>
         </div>
@@ -50,7 +47,6 @@
 </template>
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import phoneDescription from '@/components/phone/description.vue';
 import profileName from '@/components/mypage/profile.vue';
 import reminderName from '@/components/mypage/reminder.vue';
 import backHome from '@/components/back_button/back.vue';
@@ -59,7 +55,6 @@ import { confirm } from '@/components/confirmation/confirm_person';
 @Component({//middleware
     middleware: 'reject',
     components: {
-        'phone_description': phoneDescription,
         'profile_name': profileName,
         'reminder_name': reminderName,
         'back_home': backHome,
@@ -68,7 +63,6 @@ import { confirm } from '@/components/confirmation/confirm_person';
 })
 export default class myname extends Vue {
   show_pop: boolean = false;
-  show_phone_desc: boolean = true;
   head() {
     return {
       title: 'マイページ'
@@ -82,10 +76,6 @@ export default class myname extends Vue {
     this.$store.dispatch("planSelect_arrayDelete", account_name);
     confirm(account_name);
         
-  }
-  OKClick(ok_click: boolean) {
-    this.show_phone_desc = ok_click;
-    console.log(ok_click);
   }
   popShow(value: boolean) {
     this.show_pop = value;
