@@ -64,6 +64,7 @@
             padding: 10px 20px;
             font-size: 25px;
             color: rgba(36, 36, 36, 0.9);
+            background-color:rgb(238, 238, 238);
         }
     }
     .styleClass {/*上*/

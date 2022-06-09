@@ -824,7 +824,7 @@ export default class everyone extends Vue {
                 padding: 30px 40px 0 0;
 
                 @include sp {
-                    width: 30%;
+                    width: 40%;
                 }
 
                 .back_button {

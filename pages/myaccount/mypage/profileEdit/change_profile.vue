@@ -199,6 +199,10 @@ export default class change_profile extends Vue {
 
 #change_profile {
 
+    @include sp {
+        padding:0 20px 0 10px;
+    }
+
     .title {
         text-align: center;
         padding: 30px 0;

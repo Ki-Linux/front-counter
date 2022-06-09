@@ -85,8 +85,8 @@ export default class everyone_list extends Vue {
         width: 450px;
         text-align: center;
         @include sp {
-            width: 250px;
-            margin-right: 0;
+            width: 230px;
+            margin-left: 0px;
         }
         p {
             font-size: 30px;
@@ -99,8 +99,7 @@ export default class everyone_list extends Vue {
         button {
             -webkit-appearance: none;
             display: inline-block;  
-            background-color: white;
-            font-size: 20px;
+            font-size: 30px;
             margin: 10px 0;
             transform: rotate(90deg);
             @include sp {

@@ -66,7 +66,7 @@ export default class profile extends Vue {
         @include sp {
             margin-left: 0;
             margin: 5px;
-            width: 100px;
+            width: 130px;
         }
         .profile_name_img {
             img {

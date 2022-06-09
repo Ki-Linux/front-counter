@@ -54,6 +54,7 @@ export default class popUpFree extends Vue {
 </script>
 <style lang="scss">
 .title_desc {
+        margin-top: 70px;
         text-align: center;
         h1 {
             font-size: 40px;

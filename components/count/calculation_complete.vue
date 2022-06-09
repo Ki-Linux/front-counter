@@ -59,6 +59,7 @@
             &:nth-of-type(3) {
                 margin-top: 10px;
                 -webkit-appearance: none;
+                background-color:rgb(238, 238, 238);
             }
             
         }
