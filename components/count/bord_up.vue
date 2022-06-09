@@ -14,7 +14,7 @@
         </div>
         <transition name="slide">
             <div class="select_bord" v-if="$store.state.select_plan !== 'free' && showSelect">
-                <ul v-for="(select_data, index) in back_select_data" :key="select_data">
+                <ul v-for="(select_data, index) in back_select_data" :key="index">
                     <li v-if="$store.state.back_data[4] === 'img'" @click="chooseData(index)">
                         <img :src="base_url+select_data" alt="select_data">
                     </li>

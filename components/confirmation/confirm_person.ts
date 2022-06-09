@@ -1,5 +1,3 @@
-
-  
 import axios, { AxiosRequestConfig } from 'axios';
 
 export function confirm (name: string) {
