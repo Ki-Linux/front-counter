@@ -219,6 +219,9 @@ export const mutations = {
 
 
 export const getters = {
+    back_data(state) {//freeプランのときのみ
+        return state.back_data;
+    },
 
     showData(state) {//freeプランのときのみ
         return state.show_data[0];

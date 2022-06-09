@@ -89,14 +89,16 @@
         </div>
         <div class="end_button" :class="{ button_set: $route.query.select !== 'free' }">
             <p>{{ attention }}</p>
-            <button @click="toNext(save_storage)">決定</button>
+            <p v-if="wait_a_while">しばらくお待ちください</p>
+            <button @click="toNext(save_storage)">決定</button>    
         </div>
     </div>
 </template>
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
+import { Vue, Component, Watch } from 'vue-property-decorator';
 import { confirm } from '@/components/confirmation/confirm_person';
 import phoneDescription from '@/components/phone/description.vue';
+import { stringify } from 'querystring';
 
 @Component({
     components: {
@@ -120,6 +122,7 @@ export default class Option extends Vue {
     target_number: string = "";
     attention: string = "";//不等号に逆らった時
     save_storage: (string | number | ArrayBuffer | null)[] = ["＞", 0, 0, ""];//保存[不等号,目標値,現在値,写真]
+    wait_a_while: boolean = false;
     
     doSplice = (num1: number, num2: number, changed: (string | number | ArrayBuffer | null)) => {//splice function
         this.save_storage.splice(num1, num2, changed);
@@ -272,6 +275,22 @@ pictureWord(index: number): void {//写真、文字を選択した時に写真�
         this.doSplice(3, 1, "なし");
     }
 }  
+get back_data() {
+    return this.$store.getters.back_data;
+}
+@Watch("back_data")
+public backData(val: string[]): void {
+    console.log('true dayo');
+
+    if(val.length > 2) {
+        this.wait_a_while = false;
+        setTimeout(() => {
+            location.reload();
+        },1000);
+        const url_name =  this.$route.query.select;
+        this.$router.push('/counterDo/counter_this/countNum?name=' + url_name);
+    }
+}
 toNext(row: [string, number, number, string]): void {
     const send_data_go = () => {//実行
         let send_array: (string | ArrayBuffer | null)[] = this.words_data;//文字のデータを送る
@@ -346,12 +365,15 @@ toNext(row: [string, number, number, string]): void {
         .catch((err) => {
             console.log(err);
         });
+        this.wait_a_while = true;
         console.log(this.words_data);
-        this.$router.push('/counterDo/counter_this/countNum?name=' + url_name);
-        setTimeout(() => {
-            location.reload();
-        },3000);
+
     }
+
+    if(this.wait_a_while === true) {//画像待っているときに再び押せないようにする
+        return;
+    }
+
     if(this.save_storage[0] === "＞") {
         if(typeof(this.save_storage[1]) === "number" && typeof(this.save_storage[2]) === "number") {
             if(this.save_storage[1] > this.save_storage[2]) {
@@ -499,8 +521,12 @@ toNext(row: [string, number, number, string]): void {
         } 
         .end_button {
             margin-left: 1rem;
+            
             p {
                 color: red;
+                &:nth-of-type(2) {
+                    color: black;
+                }
             }
             button {/*ボタン*/
                 -webkit-appearance: none;
@@ -509,6 +535,7 @@ toNext(row: [string, number, number, string]): void {
                 padding: 7px 20px;
                 color:rgb(46, 46, 46);
             }
+
             
         }
         .button_set {

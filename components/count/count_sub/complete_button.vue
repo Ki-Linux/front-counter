@@ -27,13 +27,22 @@ export default class completeOption extends Vue {
 }
 </script>
 <style lang="scss">
+    @mixin tb {
+        @media (max-width: 900px) {
+            @content;
+        }
+    }
     #complete_button {
         margin-top: 80px;
         font-size: 50px;
         text-align: center;
         button {
-
+            -webkit-appearance: none;
             background-color: rgba(245, 245, 245, 0.7);
+
+            @include tb {
+                font-size: 20px;
+            }
         }
         .Light_up {
             background-color: white;
