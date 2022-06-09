@@ -55,9 +55,19 @@ export default class profile extends Vue {
 }
 </script>
 <style lang="scss">
+    @mixin sp {
+        @media (max-width: 560px) {
+            @content;
+        }
+    }
     #profile {
         margin-left: 40px;
         width: 130px;
+        @include sp {
+            margin-left: 0;
+            margin: 5px;
+            width: 100px;
+        }
         .profile_name_img {
             img {
                 background-color: rgb(219, 219, 219);

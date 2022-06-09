@@ -55,6 +55,7 @@
                     break;
                 case 1:
                     to_url("/counterDo/optionData/optionNum?select=free");
+                    this.$store.dispatch("delete_contents", "only_name");
                     break; 
             }
         }

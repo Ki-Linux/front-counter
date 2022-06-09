@@ -75,21 +75,37 @@ export default class everyone_list extends Vue {
 }
 </script>
 <style lang="scss">
+    @mixin sp {
+        @media (max-width: 560px) {
+            @content;
+        }
+    }
     #everyone_list {
         background-color: rgb(255, 202, 132);
         width: 450px;
         text-align: center;
+        @include sp {
+            width: 250px;
+            margin-right: 0;
+        }
         p {
             font-size: 30px;
             margin-top: 20px;
             padding: 20px 0;
+            @include sp {
+                font-size: 20px;
+            }
         }
         button {
+            -webkit-appearance: none;
             display: inline-block;  
             background-color: white;
             font-size: 20px;
             margin: 10px 0;
             transform: rotate(90deg);
+            @include sp {
+                font-size: 15px;
+            }
         }
         #show_list {
             ul {
@@ -105,6 +121,9 @@ export default class everyone_list extends Vue {
                             width: 90px;
                             max-height: 80px;
                             background-color: bisque;
+                            @include sp {
+                                width: 60px;
+                            }
                         }
                     }
                     
@@ -117,6 +136,10 @@ export default class everyone_list extends Vue {
                         width: 280px;
                         background-color: white;
                         word-break: break-all;
+                        @include sp {
+                            width: 100px;
+                            font-size: 15px;
+                        }
                     }
                     &:nth-of-type(3) {
                         font-size: 17px;

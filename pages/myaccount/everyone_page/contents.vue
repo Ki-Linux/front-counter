@@ -503,6 +503,11 @@ export default class everyone extends Vue {
 }
 </script>
 <style lang="scss">
+    @mixin sp {
+        @media (max-width: 560px) {
+            @content;
+        }
+    }
     #everyone {
         padding: 20px 0;
         .delete_tell_pop {
@@ -520,6 +525,8 @@ export default class everyone extends Vue {
                 padding: 3px;
             }
             button {
+                -webkit-appearance: none;
+                background-color: rgb(233, 233, 233);
                 margin: 50px 5px;
             }
         }
@@ -530,6 +537,11 @@ export default class everyone extends Vue {
             background-color: rgb(193, 255, 234);
             width: 700px;
             height: 850px;
+            @include sp {
+                width: 100%;
+                margin-left: 0;
+                transform: translateX(0);
+            }
             p {
                 display: inline-block;
                 margin: 20px 30px;
@@ -546,8 +558,12 @@ export default class everyone extends Vue {
                         margin: 10px 0;
                         margin-right: 20px;
                         background-color: rgba(255, 255, 255, 0.8);
+                        @include sp {
+                            font-size: 15px;
+                        }
                     }
                 }
+                
                 
             }
             .detail {
@@ -625,6 +641,11 @@ export default class everyone extends Vue {
                         &:nth-of-type(2), &:nth-of-type(3) {
                             margin: 0 100px;
                             background-color: white;
+                            @include sp {
+                                width: 90%;
+                                font-size: 15px;
+                                margin:0 15px;
+                            }
                         }
                         &:nth-of-type(2) {
                             margin-top: 30px;
@@ -635,6 +656,7 @@ export default class everyone extends Vue {
                             font-size: 15px;
                             padding-top: 10px;
                             padding-left: 55%;
+
                         }
                         &:nth-of-type(4) {
                             display: inline-block;
@@ -675,6 +697,11 @@ export default class everyone extends Vue {
                             font-size: 25px;
                             margin: 80px 0 0 50%;
                             transform: translateX(-50%);
+                            @include sp {
+                                margin-left: 0;
+                                transform: translateX(0%);
+                                font-size: 20px;
+                            }
                         }
                     }
                 }
@@ -684,10 +711,17 @@ export default class everyone extends Vue {
                     padding: 30px 0;
                     .comment_contents {
                         margin-right: 50%;
+                        @include sp {
+                            margin-right: 0;
+                        }
                             
                         li {
                                
                             &:first-of-type {
+                                @include sp {
+                                    position: relative;
+                                    margin-right: 250px;
+                                }
                                 img {
                                     
                                     float: left;
@@ -696,6 +730,7 @@ export default class everyone extends Vue {
                                     border-radius: 50%;
                                     z-index: 5;
                                     background-color: rgba(0, 0, 0, 0.4);
+                                   
                                 
                                 }
                                 
@@ -704,6 +739,9 @@ export default class everyone extends Vue {
                                 position: fixed;
                                 right: 110px;
                                 font-size: 10px;
+                                @include sp {
+                                    right: 5px;
+                                }
                             }
                             &:nth-of-type(2) {
                                    
@@ -726,27 +764,42 @@ export default class everyone extends Vue {
                                 background-color: azure;
                                 padding: 20px 10px;
                                 word-break: break-all;
-                                    
+                                @include sp {
+                                    width: 70%;
+                                    margin-left: 90px;
+                                }
                             }
                         }
    
                     }
                     form {
-                        margin-bottom: 30px;
+                        margin-bottom: 90px;
                         margin-left: 20px;
+                        @include sp {
+                            
+                            margin-left: 0;
+                        }
                         textarea {
                             padding: 5px;
                             font-size: 20px;
+                            @include sp {
                             
+                                width: 80%;
+                            }
                         }
                         input[type="submit"]{
                             -webkit-appearance: none;
+                            background-color: rgb(240, 240, 240);
                             position: absolute;
                             margin-top: 15px;
                             margin-left: 5px;
                             width: 60px;
                             padding: 3px;
                             font-size: 20px;
+                            @include sp {
+                                display: block;
+                                right: 30px;
+                            }
                         }
                             
                     }
@@ -759,13 +812,24 @@ export default class everyone extends Vue {
             padding-top: 100px;
             margin-left: 50%;
             transform: translateX(-50%);
+
+            @include sp {
+                margin-left: 0;
+                transform: translateX(0%);
+            }
             
             .my_profile {
                 margin-top: 20px;
                 background-color: rgba(255, 213, 158, 0.4);
                 padding: 30px 40px 0 0;
+
+                @include sp {
+                    width: 30%;
+                }
+
                 .back_button {
                     margin-bottom: 20px;
+
                 }
                 button {
                     font-size: 20px;
@@ -773,6 +837,10 @@ export default class everyone extends Vue {
                     padding: 10px 22.5px;
                     background-color: rgb(255, 251, 241);
                     
+                    @include sp {
+                        font-size: 10px;
+                        padding: 5px 12px;
+                    }
                 }
             }
         }

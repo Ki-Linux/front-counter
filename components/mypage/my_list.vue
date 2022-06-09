@@ -62,12 +62,20 @@ export default class myList extends Vue {
 }
 </script>
 <style lang="scss">
+@mixin sp {
+    @media (max-width: 560px) {
+        @content;
+    }
+}
 #my_list {
     width: 900px;
     background-color: bisque;
     margin: 20px auto;
     text-align: center;
     padding-bottom: 50px;
+    @include sp {
+        width: 100%;
+    }
     .toeveryone {
         position: absolute;
         padding: 20px;
@@ -90,11 +98,17 @@ export default class myList extends Vue {
         border: 1px solid red;
         margin-left: 20px;
         list-style: none;
-                
+        @include sp {
+            width: 130px;
+        }         
                 
         li {
             width: 80%;
             margin-left: 15px;
+            @include sp {
+                width: 100%;
+                margin-left: -20px;
+            }  
             
             &:first-of-type {
                 margin-top: 30px;
@@ -105,7 +119,10 @@ export default class myList extends Vue {
                     background-color: rgba(0, 0, 0, 0.1);
                     padding: 5px;
                     transform: translateX(50%);
-                    
+                    @include sp {
+                        width: 80px;
+                        transform: translateX(0%);
+                    }  
                 }
                 
             }
@@ -115,6 +132,10 @@ export default class myList extends Vue {
                 padding: 10px;
                 background-color: white;
                 word-break: break-all;
+                @include sp {
+                    font-size: 10px;
+
+                } 
             }
         }
     }
