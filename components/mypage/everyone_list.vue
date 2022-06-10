@@ -102,8 +102,10 @@ export default class everyone_list extends Vue {
             font-size: 30px;
             margin: 10px 0;
             transform: rotate(90deg);
+            background-color: white;
             @include sp {
                 font-size: 15px;
+                margin-top: -10px;
             }
         }
         #show_list {

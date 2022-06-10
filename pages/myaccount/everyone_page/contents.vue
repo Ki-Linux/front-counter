@@ -632,6 +632,7 @@ export default class everyone extends Vue {
                         padding: 0 20px;
                         &:first-of-type {
                             display: inline-block;
+                            font-size: 20px;
                             
                             img {
                                 max-width: 170px;

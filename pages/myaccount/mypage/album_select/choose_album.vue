@@ -191,6 +191,11 @@ export default class chooseAlbum extends Vue {
     @content;
   }
 }
+@mixin tb {
+    @media (max-width: 900px) {
+        @content;
+    }
+}
 
 #all_select_img {
     text-align: center;
@@ -254,7 +259,7 @@ export default class chooseAlbum extends Vue {
         .select_img {
             background-color: bisque;
             margin: 0 30vw;
-            @include sp {
+            @include tb {
                 margin: 0 20vw;
             }
             
@@ -263,7 +268,7 @@ export default class chooseAlbum extends Vue {
                 float: right;
                 background-color: rgb(175, 175, 175);
                 color:rgba(0, 0, 0, 0.8);
-                @include sp {
+                @include tb {
                     font-size: 10px;
                 }
             }
