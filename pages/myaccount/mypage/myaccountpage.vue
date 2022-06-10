@@ -43,6 +43,7 @@
         <div class="back_home">
           <back_home where_go="home"/>
         </div>
+        <confirm_person :name="$route.query.myname"/>
     </div>
 </template>
 <script lang="ts">
@@ -51,7 +52,7 @@ import profileName from '@/components/mypage/profile.vue';
 import reminderName from '@/components/mypage/reminder.vue';
 import backHome from '@/components/back_button/back.vue';
 import popUp from '@/components/pop_up/pop_up_two.vue';
-import { confirm } from '@/components/confirmation/confirm_person';
+import confirmPerson from '@/components/confirmation/confirm_person.vue';
 @Component({//middleware
     middleware: 'reject',
     components: {
@@ -59,6 +60,7 @@ import { confirm } from '@/components/confirmation/confirm_person';
         'reminder_name': reminderName,
         'back_home': backHome,
         'pop_up': popUp,
+        'confirm_person': confirmPerson,
     }
 })
 export default class myname extends Vue {
@@ -70,11 +72,9 @@ export default class myname extends Vue {
   }
   beforeMount() {
         
-    console.log('go mount');
     const account_name = String(this.$route.query.myname);
     //localStorageのデータを削除
     this.$store.dispatch("planSelect_arrayDelete", account_name);
-    confirm(account_name);
         
   }
   popShow(value: boolean) {

@@ -25,16 +25,18 @@
                 </div>
             </div>
         </div>
+        <confirm_person :name = "$store.state.username"/>
     </div>
 </template>
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
 import backData from '@/components/back_button/back.vue';
-import { confirm } from '@/components/confirmation/confirm_person';
+import confirmPerson from '@/components/confirmation/confirm_person.vue';
 @Component({
     middleware: 'reject',
     components: {
-        'back_data': backData
+        'back_data': backData,
+        'confirm_person': confirmPerson,
     }
 })
 export default class my_album extends Vue {
@@ -52,13 +54,6 @@ export default class my_album extends Vue {
         return {
             title: 'マイアルバム'
         }
-    }
-    beforeMount() {
-        
-        console.log('go mount');
-        this.username = this.$store.state.username;
-        confirm(this.username);
-        
     }
     mounted() {
         const base_url = process.env.SERVER_URL;

@@ -92,17 +92,19 @@
             <p v-if="wait_a_while">しばらくお待ちください</p>
             <button @click="toNext(save_storage)">決定</button>    
         </div>
+        <confirm_person :name="username"/>
     </div>
 </template>
 <script lang="ts">
 import { Vue, Component, Watch } from 'vue-property-decorator';
-import { confirm } from '@/components/confirmation/confirm_person';
+import confirmPerson from '@/components/confirmation/confirm_person.vue';
 import phoneDescription from '@/components/phone/description.vue';
 import { stringify } from 'querystring';
 
 @Component({
     components: {
-        'phone_description': phoneDescription
+        'phone_description': phoneDescription,
+        'confirm_person': confirmPerson,
     }
 })
 export default class Option extends Vue {
@@ -123,6 +125,7 @@ export default class Option extends Vue {
     attention: string = "";//不等号に逆らった時
     save_storage: (string | number | ArrayBuffer | null)[] = ["＞", 0, 0, ""];//保存[不等号,目標値,現在値,写真]
     wait_a_while: boolean = false;
+    username: string = "";
     
     doSplice = (num1: number, num2: number, changed: (string | number | ArrayBuffer | null)) => {//splice function
         this.save_storage.splice(num1, num2, changed);
@@ -143,8 +146,7 @@ beforeMount() {
         
     if(this.$route.query.select !== "free") {
         console.log('go mount');
-        const username = String(this.$route.query.select);
-        confirm(username);
+        this.username = String(this.$route.query.select);
     }
     
         

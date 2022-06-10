@@ -1,6 +1,6 @@
 <template>
     <div id="bord_up">
-        <div class="contents_item" v-for="(show_word_img, indexImg) in showWordImg" :key="indexImg">
+        <div class="contents_item" v-for="(show_word_img, indexImg) in showImageWord" :key="indexImg">
             <p v-if="$store.state.back_data[4] === 'img'">
                 <img :src="show_word_img" alt="select_img">
             </p>
@@ -27,20 +27,13 @@
     </div>
 </template>
 <script lang="ts">
-    import { Component, Vue } from 'vue-property-decorator';
+    import { Component, Vue, Watch } from 'vue-property-decorator';
     @Component
     export default class bord extends Vue {
         back_select_data: string[] = [];
         base_url: string|undefined = "";
-        mounted() {
-            this.base_url = process.env.SERVER_URL;
-            const image_data = this.$store.state.back_select_data;
-            for(let i=0; i < image_data.length; i++) {
-                
-                this.back_select_data.splice(i, 0, image_data[i]);
-            }
-            
-        };
+        showImageWord: string[] = [];
+
         get showData() {//free planのときのみ
             return this.$store.getters.showData;
         };
@@ -69,6 +62,25 @@
             return arrayWordImg;
     
         }
+        @Watch("showWordImg")
+        public show_word_img(val: string[]): void {
+            console.log('true of showWordImg');
+            this.showImageWord = val;
+
+        }
+        mounted() {
+            
+            this.base_url = process.env.SERVER_URL;
+            const image_data = this.$store.state.back_select_data;
+            for(let i=0; i < image_data.length; i++) {
+                
+                this.back_select_data.splice(i, 0, image_data[i]);
+            }
+
+            this.showImageWord = this.showWordImg;
+            
+        };
+
         chooseData(choose_num: number) {//クリックした選択肢のデータ
             this.$store.dispatch("chooseData", [this.back_select_data[choose_num], false]);//選択した文字、画像データ 選択データを閉じる
             console.log(choose_num);

@@ -99,9 +99,11 @@ export default class popUpFree extends Vue {
            
         }
         li{
+            
             padding: 5px 0;
             font-size: 20px;
-            margin-left: 100px;
+            margin-left: 50%;//100px;
+            transform: translateX(-45%);
         }
     } 
 .selector {

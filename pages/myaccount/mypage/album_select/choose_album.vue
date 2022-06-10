@@ -31,13 +31,17 @@
             <button type="submit">アルバムに追加</button>
         </div>
         </form>  
+        <confirm_person :name = "$store.state.username"/>
     </div>
 </template>
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
-import { confirm } from '@/components/confirmation/confirm_person';
+import confirmPerson from '@/components/confirmation/confirm_person.vue';
 @Component({
-    middleware: 'reject'
+    middleware: 'reject',
+    components: {
+        'confirm_person': confirmPerson,
+    }
 })
 export default class chooseAlbum extends Vue {
     img_data: any/*string | ArrayBuffer | null*/ = require('@/static/edit/hatena.png');
@@ -72,13 +76,6 @@ export default class chooseAlbum extends Vue {
         return {
             title: 'アルバム',
         }
-    }
-    beforeMount() {
-        
-        console.log('go mount');
-        const username = this.$store.state.username;
-        confirm(username);
-        
     }
     mounted() {
         const store = this.$store.state;

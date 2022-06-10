@@ -97,6 +97,7 @@
         <div v-else  v-show="!show_detail">
             <my_list :list_username="$route.query.who" @detail_data_show="listDetail"/>
         </div>
+        <confirm_person :name = "$store.state.username"/>
     </div>
 </template> 
 <script lang="ts">
@@ -106,7 +107,7 @@ import myList from '@/components/mypage/my_list.vue';
 import profileData from '@/components/mypage/profile.vue';
 import backAccount from '@/components/back_button/back.vue';
 import { AxiosRequestConfig } from 'axios';
-import { confirm } from '@/components/confirmation/confirm_person';
+import confirmPerson from '@/components/confirmation/confirm_person.vue';
 @Component({
     middleware: 'reject',
     components: {
@@ -114,6 +115,7 @@ import { confirm } from '@/components/confirmation/confirm_person';
         'profile_data': profileData,
         'my_list': myList,
         'back_account': backAccount,
+        'confirm_person': confirmPerson
     }
 })
 export default class everyone extends Vue {
@@ -145,13 +147,6 @@ export default class everyone extends Vue {
         }
     }
     
-    beforeMount() {
-        
-        console.log('go mount');
-        this.username = this.$store.state.username;
-        confirm(this.username);
-        
-    }
     mounted() {
         
         this.url = '' + process.env.SERVER_URL;

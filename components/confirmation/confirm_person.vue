@@ -1,6 +1,18 @@
-import axios, { AxiosRequestConfig } from 'axios';
+<template>
+    <div></div>
+</template>
+<script lang="ts">
+import { Vue, Component, Prop } from 'vue-property-decorator';
 
-export function confirm (name: string) {
+@Component
+export default class confirm extends Vue {
+    @Prop()
+    public name!: string;
+    mounted() {
+
+    if(this.name === "") {
+        return;
+    }
 
     const cookie = document.cookie;
 
@@ -25,16 +37,14 @@ export function confirm (name: string) {
         send_data = only_first[1].slice(8);
     }
 
-    const options: AxiosRequestConfig = {
-        url: '/api/confirm_token',
-        method: 'get',
+    //const name = this.$store.state.username;
+
+    this.$axios.get('confirm_token', {
         params: {
-            username: name,
+            username: this.name,
             divided_back: send_data,
         }
-    }
-
-    axios(options)
+    })
     .then((response) => {
         console.log(response.data);
         const which_num = response.data;
@@ -50,5 +60,6 @@ export function confirm (name: string) {
     .catch((err) => {
         console.log(err);
     });
-
+    }
 }
+</script>

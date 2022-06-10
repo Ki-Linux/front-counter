@@ -50,18 +50,20 @@
                 </div>
             </div>
         </form>
+        <confirm_person :name = "$store.state.username"/>
     </div>
 </template>
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
 import { AxiosRequestConfig } from 'axios';
-import { confirm } from '@/components/confirmation/confirm_person';
+import confirmPerson from '@/components/confirmation/confirm_person.vue';
 import phoneDescription from '@/components/phone/description.vue';
 
 @Component({
     middleware: 'reject',
     components: {
-        'phone_description': phoneDescription
+        'phone_description': phoneDescription,
+        'confirm_person': confirmPerson,
     }
 })
 export default class edit extends Vue {
@@ -102,13 +104,6 @@ export default class edit extends Vue {
         return {
             title: title_data
         }
-    }
-    beforeMount() {
-        
-        console.log('go mount');
-        const username = this.$store.state.username;
-        confirm(username);
-        
     }
     mounted() {
         const editNum = this.$route.query.contents;

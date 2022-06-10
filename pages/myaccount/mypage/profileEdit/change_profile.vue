@@ -28,18 +28,20 @@
                 <back_button where_go="account"/>
             </div>
         </div>
+        <confirm_person :name = "$store.state.username"/>
     </div>
 </template>
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
 import profileData from '@/components/mypage/profile.vue';
 import backButton from '@/components/back_button/back.vue';
-import { confirm } from '@/components/confirmation/confirm_person';
+import confirmPerson from '@/components/confirmation/confirm_person.vue';
 @Component({
     middleware: 'reject',
     components: {
         'profile_data': profileData,
         'back_button': backButton,
+        'confirm_person': confirmPerson,
     }
 })
 export default class change_profile extends Vue {
@@ -87,13 +89,6 @@ export default class change_profile extends Vue {
         .catch((err) => {
             console.log(err);
         })
-    }
-    beforeMount() {
-        
-        console.log('go mount');
-        const username = this.change_data[1].img_name_comment;
-        confirm(username);
-        
     }
  
     sendData(value: string) {

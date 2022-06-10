@@ -56,17 +56,19 @@
                 <back_button where_go="account"/>
             </div>
         </div>
+        <confirm_person :name = "user_id_name[1]"/>
     </div>
 </template>
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { AxiosRequestConfig } from 'axios';
 import backButton from '@/components/back_button/back.vue';
-import { confirm } from '@/components/confirmation/confirm_person';
+import confirmPerson from '@/components/confirmation/confirm_person.vue';
 @Component({
     middleware: 'reject',
     components: {
         'back_button': backButton,
+        'confirm_person': confirmPerson,
     }
 })
 export default class optionMyData extends Vue {
@@ -92,9 +94,8 @@ export default class optionMyData extends Vue {
     }
     beforeMount() {
         
-        console.log('go mount')
+        console.log('go mount');
         this.user_id_name[1] = this.$store.state.username;
-        confirm(this.user_id_name[1]);
         
     }
     mounted() {    
