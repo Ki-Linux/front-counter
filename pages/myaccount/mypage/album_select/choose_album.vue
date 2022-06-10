@@ -44,7 +44,7 @@ export default class chooseAlbum extends Vue {
     send_image: any;
     send_sql_image: string = "";
     img_num: number = 0;
-    next_imgs: string[] = ["◀", "▶"];
+    next_imgs: string[] = ["←", "→"];
     written_name: string = "";
     attention: string = "";
     show_next_img: boolean = true;
@@ -195,6 +195,9 @@ export default class chooseAlbum extends Vue {
 #all_select_img {
     text-align: center;
     padding: 50px 0;
+    @include sp {
+        padding: 50px 20px;
+    }
     .to_next {
         
         .not_album {
@@ -211,9 +214,15 @@ export default class chooseAlbum extends Vue {
         h1 {
             font-size: 40px;
             padding-top: 50px;
+            @include sp {
+                font-size: 30px;
+            }
         }
         p {
             font-size: 20px;
+            @include sp {
+                font-size: 10px;
+            }
         }
     }
     form {
@@ -222,6 +231,9 @@ export default class chooseAlbum extends Vue {
             width: 400px;
             padding: 5px;
             font-size: 25px;
+            @include sp {
+                width: 300px;
+            }
         }
     } 
     .img_box {
@@ -242,12 +254,18 @@ export default class chooseAlbum extends Vue {
         .select_img {
             background-color: bisque;
             margin: 0 30vw;
+            @include sp {
+                margin: 0 20vw;
+            }
             
             p button {
                 font-size: 40px;
                 float: right;
                 background-color: rgb(175, 175, 175);
                 color:rgba(0, 0, 0, 0.8);
+                @include sp {
+                    font-size: 10px;
+                }
             }
             p .right_button {
                float: left;
@@ -261,6 +279,10 @@ export default class chooseAlbum extends Vue {
                 -webkit-appearance: none;
                 padding: 40px;
                 font-size: 20px;
+                @include sp {
+                    padding: 40px 0;
+                    font-size: 15px;
+                }
             }
         }
     }

@@ -253,7 +253,7 @@ export default class reminder extends Vue {
 
         @include sp {
             width: 80%;
-            height: 50%;
+            height: 80%;
             font-size: 25px;
         }
 

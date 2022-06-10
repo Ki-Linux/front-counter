@@ -636,6 +636,11 @@ export default class everyone extends Vue {
                             img {
                                 max-width: 170px;
                                 max-height: 170px;
+                                @include sp {
+                                    max-width: 150px;
+                                    max-height: 150px;
+                                    margin-top: 20px;
+                                }
                             }
                         }
                         &:nth-of-type(2), &:nth-of-type(3) {

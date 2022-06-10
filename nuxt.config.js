@@ -8,7 +8,7 @@ export default {
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'twitter:card', name: 'twitter:card', content: 'summary'},
       { hid: 'twitter:site', name: 'twitter:site', content: '@kihosei_6'},
-      { hid: 'twitter:image', name: 'twitter:image', content: '/opg_image.png'},
+      { hid: 'twitter:image', name: 'twitter:image', content: 'https://countercontainer.s3.ap-northeast-1.amazonaws.com/twitter_not_delete/twitter_image.png'},
       { hid: 'twitter:description', name: 'twitter:description', content: 'プラマイカウンター'},
       { hid: 'twitter:title', name: 'twitter:title', content: 'プラマイカウンターはどんなときでもどんなものでも数える(カウント)したいときに楽しく使える魔法のようなカウンターなのだ。'},
       { hid: 'og:type', property: 'og:type', content: 'website'},

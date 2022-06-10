@@ -1,7 +1,7 @@
 <template>
     <div id="everyone_list">
         <p>みんなの閲覧リスト</p>
-        <button @click="nextContents('front')" v-if="contents_num !== 0">◀</button>
+        <button @click="nextContents('front')" v-if="contents_num !== 0">←</button>
         <div id="show_list" v-for="(content_array, index) in contents_array" :key="index">
             <ul @click="detailDataShow(index)">
                 <li v-if="content_array.picture === url+'notImg'"></li>
@@ -10,7 +10,7 @@
                 <li>{{ content_array.username }}</li>
             </ul>          
         </div>
-        <button @click="nextContents('back')" v-if="!delete_back_button[0]">▶</button>
+        <button @click="nextContents('back')" v-if="!delete_back_button[0]">→</button>
     </div>
 </template>
 <script lang="ts">
