@@ -7,8 +7,10 @@
       </nav>
       <header>
         <transition-group name="slide-fade">
-            <div v-show="show_section" class="show_login" v-for="(login, index) in logins" :key="index">
-              <nuxt-link class="link" @click.native="tryLogin(index)" :to="login.to_url">{{ login.showed_data }}</nuxt-link>
+            <div v-show="show_section" class="show_login" v-for="(login, index) in logins" :key="login.showed_data">
+              <nuxt-link class="link" @click.native="tryLogin(index)" :to="login.to_url">
+                {{ login.showed_data }}
+              </nuxt-link>
             </div> 
         </transition-group>
       </header>
