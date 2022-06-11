@@ -1,4 +1,3 @@
-
 <template>
     <div id="everyone">
         <div class="delete_tell_pop" v-if="show_select_del_or_tell">
@@ -477,11 +476,15 @@ export default class everyone extends Vue {
             const go_delete = (delete_id: number) => {
                 this.$axios.delete("edit_del/" + delete_id)
                 .then((response) => {
-                    const can_delete = response.data.can_delete
+                    const can_delete = response.data.can_delete;
                     console.log(can_delete);
                     if(can_delete) {
                         console.log('success');
-                        location.reload();
+                        this.$router.push('/myaccount/everyone_page/contents?who=' + this.username);
+                        setTimeout(() => {
+                            location.reload();
+                        },1000);
+                        
                     }
                     
                 })

@@ -5,7 +5,7 @@
                 <p @click="showYellowList">
                     <img src="../../static/mypage/bell2.png" alt="reminder">
                 </p>  
-                <p v-if="this.title_length !== 0">
+                <p v-if="title_length !== 0">
                     {{ title_length }}
                 </p>    
                 <button @click="toEveryonePostPage">みんなの投稿</button>     
@@ -92,11 +92,16 @@ export default class reminder extends Vue {
             this.$axios.delete('delete_reminder/' + delete_data)
             .then((response) => {
                 console.log(response);
+                const judge = response.data;
+
+                if(judge) {
+                    location.reload();
+                }
             })
             .catch((err) => {
                 console.log(err);
             });
-            location.reload();
+        
         }
         if(confirm('削除しますか?')) {
             can_delete_data();
@@ -195,6 +200,7 @@ export default class reminder extends Vue {
         padding-right: 40px;
         background-color: yellow;
         text-align: center;
+        z-index: 5;
         &::before {
             content: '';
             position: absolute;
