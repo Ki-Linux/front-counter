@@ -376,7 +376,9 @@ export default class edit extends Vue {
                         background-color: rgba(187, 187, 187, 0.4);
 
                         @include pc {
-                            width: 60%;
+                            width: 50%;
+                            margin-left: 50%;
+                            transform: translateX(-50%);
                         }
                     }
                 } 
