@@ -148,6 +148,8 @@ export default class everyone extends Vue {
     }
     
     mounted() {
+
+        this.username = this.$store.state.username;
         
         this.url = '' + process.env.SERVER_URL;
         if(this.$route.query.who !== "everyone") {

@@ -25,12 +25,12 @@
                         </div>
                     </div>
                     <div class="img_box">
-                        <p v-if="select_img_chosen && url !== 'notImg'">
+                        <p v-if="right_left === 0 && select_img_chosen === true">
                             <img :src="show_url" alt="img none">
                         </p>
                         <p v-else>画像はありません</p>
                     </div>    
-                    <input v-if="select_img_chosen" type="file" name="picture" ref="preview" @change="editPicture" multiple="multiple">
+                    <input v-if="right_left === 0" type="file" name="picture" ref="preview" @change="editPicture" multiple="multiple">
                 </div>  
                 <div class="comment">
                     <textarea name="comment" id="" cols="30" rows="10" maxlength="200" placeholder="コメントを入力" v-model="my_comment"></textarea>
@@ -93,6 +93,7 @@ export default class edit extends Vue {
     show_select_button: boolean = false;//画像切り替えボタンを表示する
     select_image: boolean = false;
     add_edit: boolean = false;
+    right_left: number = 0;//画像選択かなしか
     head() {
         let title_data;
         const router_data = this.$route.query.contents;
@@ -127,6 +128,7 @@ export default class edit extends Vue {
             if(img_data[4] === "nothing" || img_data[4] === "word") {//画像以外のとき
                 this.url = "notImg";
                 this.show_url = "notImg";
+                this.select_img_chosen = false;
                 
             }
         } else {//編集
@@ -146,10 +148,16 @@ export default class edit extends Vue {
                 this.my_comment = res.my_comment;
                 this.array_check.splice(0, 5, res.can_list , res.can_good, res.can_comment, res.can_see, res.can_top);
                 this.show_checked = true;
+
+                if(this.url === "notImg") {
+                    console.log(this.url);
+                    this.select_img_chosen = false;
+                }
             })
             .catch((err) => {
                 console.log(err);
-            })
+            });
+
         }
     }
     OKClick(ok_click: boolean) {
@@ -166,6 +174,7 @@ export default class edit extends Vue {
             if(this.url === select_data[0]) {//最初のデータで左を押したときに一番最後のデータを表示する
                 this.shift_num = last_data;
             }
+            
         }
         if(img_num === 1) {//+1
             this.shift_num++;
@@ -175,6 +184,7 @@ export default class edit extends Vue {
             }
             
         }
+        
         this.url = select_data[this.shift_num];
         this.storage_image = [this.url, false];
         this.show_url = url + this.url;
@@ -186,25 +196,47 @@ export default class edit extends Vue {
         const img_data = store.back_data;
         const back_data = store.back_select_data;
         if(num === 0) {
+
             this.select_img_chosen = true;
+            const editNum = this.$route.query.contents;
+            if(editNum === 'new_post') {//投稿
+
+                if(img_data[4] !== "img") {
+                    this.select_img_chosen = false;
+                }
+
+            } else {//編集
+
+                if(this.url === "notImg") {
+                    this.select_img_chosen = false;
+                }
+
+            }
+            
             if(img_data[4] !== "nothing" && back_data.length > 1 && !this.select_image) {
                 this.show_select_button = true;//◀▶
             }
         } else if(num === 1) {
             this.select_img_chosen = false;
             this.show_select_button = false;//◀▶
+            this.storage_image[1] = false;
         }
+        this.right_left = num;//画像選択かなしか
     }
     
     editPicture(e: Event) {
-        this.show_select_button = false;
-        this.select_image = true;
         
         const file = (<HTMLInputElement>e.target).files![0];
-        this.storage_image = [file, true];
-        this.url = file.name;
+        
         const reader = new FileReader();
         reader.addEventListener('load', () => {
+            this.show_select_button = false;
+            this.select_image = true;
+            this.storage_image = [file, true];
+            this.url = file.name;
+
+
+            this.select_img_chosen = true;
             const result = reader.result;
             this.show_url = result;
             this.add_edit = true;
@@ -244,7 +276,7 @@ export default class edit extends Vue {
         if(this.my_comment === "") {
             this.my_comment = 'コメントがありません。';
         }
-        if(!this.select_img_chosen || this.$store.state.back_data[4] !== "img"){//this.storage_image[0] === "s") {//画像でないときのみ代入
+        if(!this.select_img_chosen){//画像でないときのみ代入
             this.url = "notImg";
             this.storage_image[0] = this.url;
             
@@ -276,6 +308,7 @@ export default class edit extends Vue {
                 this.storage_image[0],
                 this.storage_image[1]
             ];
+            console.log(second_parameter);
             for(let i=0; i < first_parameter.length; i++) {
                 formData.append(first_parameter[i], second_parameter[i]);
             }

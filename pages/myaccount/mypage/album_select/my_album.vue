@@ -25,7 +25,7 @@
                 </div>
             </div>
         </div>
-        <confirm_person :name = "$store.state.username"/>
+        <confirm_person :name = "username"/>
     </div>
 </template>
 <script lang="ts">
@@ -56,6 +56,7 @@ export default class my_album extends Vue {
         }
     }
     mounted() {
+        this.username = this.$store.state.username;
         const base_url = process.env.SERVER_URL;
         this.$axios.get('my_album_data_get', {
             params: {
