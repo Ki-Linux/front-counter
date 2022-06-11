@@ -345,6 +345,11 @@ export default class edit extends Vue {
 }
 </script>
 <style lang="scss">
+@mixin pc {
+    @media (min-width: 750px) {
+      @content;
+    }
+}
 #edit {
     form {
         .img_selector {
@@ -369,6 +374,10 @@ export default class edit extends Vue {
                     p img {
                         width: 100%;
                         background-color: rgba(187, 187, 187, 0.4);
+
+                        @include pc {
+                            width: 60%;
+                        }
                     }
                 } 
                 input[type="file"] {

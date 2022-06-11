@@ -389,12 +389,21 @@ export default class Home extends Vue{
         img {
           width: 80%;
           margin-left: 10%;
+          @include pc {
+            max-width: 140px;
+            margin-left: 50%;
+            transform: translateX(-50%);
+          }
         }
       }
       td {
      
         word-break: normal;
         width: 60%;
+        @include pc {
+          font-size: 25px;
+           
+        }
       }
      
     }

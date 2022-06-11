@@ -36,8 +36,8 @@
                     <li v-show="detail_profile.user_comment !== 'コメントはありません。'">
                         {{ detail_profile.user_comment }}
                     </li>
-                    <li @click="toOneAccountListPage(detail_profile.username)">
-                        <button>投稿</button>
+                    <li>
+                        <button @click="toOneAccountListPage(detail_profile.username)">投稿</button>
                     </li>
                 </ul>
             </div>
@@ -466,6 +466,7 @@ export default class everyone extends Vue {
         
     }
     toOneAccountListPage(one_list_name: string) {//その人のアカウントの投稿ページへ
+        this.show_detail = false;
         this.$router.push("/myaccount/everyone_page/contents?who=" + one_list_name);
     }
     EditDelete(project: string) {
