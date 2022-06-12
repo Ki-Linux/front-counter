@@ -16,7 +16,7 @@
       </header>
       <main>
         <div class="top_container">
-          <h1><span>プラ</span><span>マイ</span>カウンター</h1>
+          <h1><span>ラ</span><span>マイ</span>カウンター</h1>
           <div class="description">
             <h2>プラマイカウンターとは</h2>
             <p>
