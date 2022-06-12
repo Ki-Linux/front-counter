@@ -33,4 +33,7 @@ jobs:
       - name: Run a multi-line script
         run: |
           touch .env
-          echo "URL=${{ secrets.URL }}" >> .env
+          echo "BASE_URL=${{ secrets.BASE_URL }}" >> .env
+          echo "pass_one=${{ secrets.pass_one }}" >> .env
+          echo "pass_two=${{ secrets.pass_two }}" >> .env
+          echo "SERVER_URL=${{ secrets.SERVER_URL }}" >> .env
