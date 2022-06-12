@@ -1,5 +1,6 @@
 <template>
   <div id="home"> 
+      <p>{{ ENV["BASE_URL"] }}</p>
       <nav>
         <nuxt-link class="to_count" to="/counterDo/login_select">プラマイカウントを使う</nuxt-link>
         <img class="selector_img" @click="changeBox" :src="url_change" alt="open">
