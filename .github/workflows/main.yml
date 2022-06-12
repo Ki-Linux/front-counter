@@ -22,6 +22,18 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - name: URL action
+        with: 
+          BASE_URL: ${{ secrets.BASE_URL }}
+          pass_one: ${{ secrets.pass_one }}
+          pass_two: ${{ secrets.pass_two }}
+          SERVER_URL: ${{ secrets.SERVER_URL }}
+        env:
+          BASE_URL: ${{ secrets.BASE_URL }}
+          pass_one: ${{ secrets.pass_one }}
+          pass_two: ${{ secrets.pass_two }}
+          SERVER_URL: ${{ secrets.SERVER_URL }}
+          
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
@@ -35,11 +47,4 @@ jobs:
           echo Add other actions to build,
           echo test, and deploy your project.
           
-      - shell: bash
-        env:
-          BASE_URL: ${{ secrets.BASE_URL }}
-          pass_one: ${{ secrets.pass_one }}
-          pass_two: ${{ secrets.pass_two }}
-          SERVER_URL: ${{ secrets.SERVER_URL }}
-        run: |
-          example-command "$env:BASE_URL"
+      
