@@ -1,24 +1,10 @@
 # プラマイカウンターサービス
 [こちらがリンクとなります。](https://plusminuscounter.com).
-## Build Setup
+
 ![image](https://countercontainer.s3.ap-northeast-1.amazonaws.com/readme/%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88+(9).png)
 
-```bash
-# install dependencies
-$ npm install
-
-# serve with hot reload at localhost:3000
-$ npm run dev
-
-# build for production and launch server
-$ npm run build
-$ npm run start
-
-# generate static project
-$ npm run generate
-```
-
-For detailed explanation on how things work, check out the 
+## なぜこのサービスを作ったのか
+生きていると何か物を数えなければならない場面に遭遇することがあると思います。その時に大抵の人は面倒だと感じるだけだとです。そこで数えるという行為自体を楽しめるようにしてしまえば、数えることに億劫にならないのではないかと思いました。そのような理由から、「過程を楽しむ」をコンセプトにこのサイトを作りました。
 
 ## Special Directories
 
