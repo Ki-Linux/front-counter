@@ -1,5 +1,5 @@
 # プラマイカウンターサービス
-
+[こちらをご参照ください](https://nuxtjs.org).
 ## Build Setup
 
 ```bash
@@ -17,7 +17,7 @@ $ npm run start
 $ npm run generate
 ```
 
-For detailed explanation on how things work, check out the [documentation](https://nuxtjs.org).
+For detailed explanation on how things work, check out the 
 
 ## Special Directories
 
