@@ -1,56 +1,53 @@
 # プラマイカウンターサービス
 [こちらがリンクとなります。](https://plusminuscounter.com).
+ゲストユーザーとしてメールアドレスを(guest@gmail.com),パスワードを(guestguest)としてログインしてください。
 
 ![image](https://countercontainer.s3.ap-northeast-1.amazonaws.com/readme/%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88+(9).png)
 
 ## なぜこのサービスを作ったのか
-生きていると何か物を数えなければならない場面に遭遇することがあると思います。その時に大抵の人は面倒だと感じるだけだとです。そこで数えるという行為自体を楽しめるようにしてしまえば、数えることに億劫にならないのではないかと思いました。そのような理由から、「過程を楽しむ」をコンセプトにこのサイトを作りました。
+生きていると何か物を数えなければならない場面に遭遇することがあると思います。その時に大抵の人は面倒だと感じるだけだとです。そこで数えるという行為自体を楽しめるようにしてしまえば、数えることに億劫にならないのではないかと思いました。そのような理由から、「過程を楽しむ」をコンセプトにこのサイトを作りました。子供から大人まで老若男女問わず楽しめると思います。
 
-## Special Directories
+## 何ができるのか
 
-You can create the following extra directories, some of which have special behaviors. Only `pages` is required; you can delete them if you don't want to use their functionality.
+画像、文字を最大10個まで選択した状態でカウントを行うことができます。
 
-### `assets`
+アカウント登録することで、達成したものをアルバムとして記録することができます。
 
-The assets directory contains your uncompiled assets such as Stylus or Sass files, images, or fonts.
+SNSのように共有スペースで記録を共有できます。その際にいいね、コメント、閲覧数の表示の可否を予め選択できるようにしてあります。また、編集によって後に変えることもできます。
 
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/assets).
+## 使用技術
+フロントエンド：Nuxt.js
+バックエンド: Laravel
+データベース: MySQL
+サーバー: Microsoft Azure
+画像保存先: aws S3
 
-### `components`
+## 開発人数
 
-The components directory contains your Vue.js components. Components make up the different parts of your page and can be reused and imported into your pages, layouts and even other components.
+個人開発
 
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/components).
+## 開発期間
 
-### `layouts`
+2022年2月 サービス全体の大まかな構成、データベースのテーブル,カラムの定義
 
-Layouts are a great help when you want to change the look and feel of your Nuxt app, whether you want to include a sidebar or have distinct layouts for mobile and desktop.
+2022年3月 開発開始
 
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/layouts).
+2022年6月 Azureへデプロイ
+
+## なぜ、フロントエンドにNuxt.js, バックエンドにLaravelを用いたのか
+
+元々はVueとNode.jsを使った開発を行っていました。しかし、私はSPAのデメリットとしてSEO対策が難しいことが後にわかりました。そこで、少し調べたところ、SSRというものもあることを知りました。今回はそのSEO対策をきちんとしたかったので、Nuxt.jsを用いました。バックエンドに関しては、Node.jsは元々、JavaScriptがバックエンドとして使えるからという単純な理由で開発に使用していました。しかし、バックエンドを詳しく調べていくうちにLaravelの機能の豊富さに目がいきました。例えば、自動メール送信機能を実装するためにNode.jsではsendgridというAPIサービスを使っていましたが、Laravelはデフォルトでメール送信できる機能が揃っていたので、とても便利でした。
+
+## このサービスの工夫したポイント
+
+このサービスを使うのが面倒だと思われたら使ってもらえなくなってしますので、説明や設定を完結にしました。また、ページ遷移を極力なくすことにより、新しい表示をスムーズに行えるようにしました。今回、API通信で行っているため、フロントエンドのみで解決できる問題はバックエンドに任せないようにすることで、無駄な通信をなくしました。
+
+## 開発で苦労したところ
+
+今回、Nuxt.jsとLaravelを使った開発は初めてだったので、とにかく調べることが多かったです。
+機能を実装するためのコードを書くことよりもフロントエンドとバックエンドの接続やバックエンドとS3の接続といった接続をするための設定が難しかったです。
 
 
-### `pages`
+## 今回の開発を経て思ったこと
 
-This directory contains your application views and routes. Nuxt will read all the `*.vue` files inside this directory and setup Vue Router automatically.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/get-started/routing).
-
-### `plugins`
-
-The plugins directory contains JavaScript plugins that you want to run before instantiating the root Vue.js Application. This is the place to add Vue plugins and to inject functions or constants. Every time you need to use `Vue.use()`, you should create a file in `plugins/` and add its path to plugins in `nuxt.config.js`.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/plugins).
-
-### `static`
-
-This directory contains your static files. Each file inside this directory is mapped to `/`.
-
-Example: `/static/robots.txt` is mapped as `/robots.txt`.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/static).
-
-### `store`
-
-This directory contains your Vuex store files. Creating a file in this directory automatically activates Vuex.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/store).
+自分でこれは無理だとすぐに限界を作らずに新しいことに挑戦してみることは大切だと感じました。努力すれば自分が思っているよりもうまく行くことは今回の開発でも多かったです。既存の知識だけでやろうとせずに新しい技術、知識を積極的に取り入れていく姿勢を今後も持ち続けたいです。
