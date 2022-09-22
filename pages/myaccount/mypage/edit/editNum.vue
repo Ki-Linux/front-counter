@@ -1,4 +1,3 @@
-
 <template>
     <div id="edit">
         <div class="instruct_incline" v-if="show_phone_desc">
@@ -58,7 +57,6 @@ import { Vue, Component } from 'vue-property-decorator';
 import { AxiosRequestConfig } from 'axios';
 import confirmPerson from '@/components/confirmation/confirm_person.vue';
 import phoneDescription from '@/components/phone/description.vue';
-
 @Component({
     middleware: 'reject',
     components: {
@@ -106,8 +104,11 @@ export default class edit extends Vue {
             title: title_data
         }
     }
+
     mounted() {
+
         const editNum = this.$route.query.contents;
+
         if(editNum === 'new_post') {//投稿
             this.button_name = "投稿";
             const store = this.$store.state;
@@ -119,9 +120,11 @@ export default class edit extends Vue {
             if(back_data.length > 1 && img_data[4] !== "nothing") {//画像をたくさん選択しているとき　なし選択は除外
                 this.show_select_button = true;//画像を切り替えるボタンを表示
             }
+
             if(plan !== "free") {
                 img_data[3] = store.back_select_data[this.shift_num];//最初は0
             }
+
             this.url = img_data[3];
             this.storage_image = [this.url, false];
             this.show_url = process.env.SERVER_URL+this.url;
@@ -132,7 +135,9 @@ export default class edit extends Vue {
                 
             }
         } else {//編集
+
             this.button_name = "編集";
+
             this.$axios.get("edit_show", {
                 params: {
                     id: editNum,
@@ -157,13 +162,14 @@ export default class edit extends Vue {
             .catch((err) => {
                 console.log(err);
             });
-
         }
     }
+
     OKClick(ok_click: boolean) {
         this.show_phone_desc = ok_click;
         console.log(ok_click);
     }
+
     shiftImg(img_num: number) {
         const select_data = this.$store.state.back_select_data;
         const last_data = select_data.length - 1;
@@ -182,7 +188,6 @@ export default class edit extends Vue {
             if(this.url === select_data[last_data]) {//最後のデータで右を押したときに一番最初のデータを表示する
                 this.shift_num = 0;
             }
-            
         }
         
         this.url = select_data[this.shift_num];
@@ -190,13 +195,14 @@ export default class edit extends Vue {
         this.show_url = url + this.url;
         console.log(img_num);
     }
+
     imgSelect(num: number) {
         console.log(num);
         const store = this.$store.state;
         const img_data = store.back_data;
         const back_data = store.back_select_data;
-        if(num === 0) {
 
+        if(num === 0) {
             this.select_img_chosen = true;
             const editNum = this.$route.query.contents;
             if(editNum === 'new_post') {//投稿
@@ -225,7 +231,6 @@ export default class edit extends Vue {
     }
     
     editPicture(e: Event) {
-        
         const file = (<HTMLInputElement>e.target).files![0];
         
         const reader = new FileReader();
@@ -235,7 +240,6 @@ export default class edit extends Vue {
             this.storage_image = [file, true];
             this.url = file.name;
 
-
             this.select_img_chosen = true;
             const result = reader.result;
             this.show_url = result;
@@ -243,6 +247,7 @@ export default class edit extends Vue {
         })
         reader.readAsDataURL(file);
     }
+
     stopPost() {
         const editNum = this.$route.query.contents;
         if(editNum === 'new_post') {//post
@@ -253,21 +258,20 @@ export default class edit extends Vue {
             const name = this.$store.state.username;
             this.$router.push('/myaccount/everyone_page/contents?who=' + name);
         }
-        
     }
+
     checkOn(index: number, select_num: number) {
-       
         for(let i: number=0; i < 5; i++) {//ボックス一覧の表示
             switch(index) {//チェックしている番号の列
                 case i:
                     this.array_check[i] = select_num;
  
                 break;
-            }
-            
+            }        
         }
         console.log(this.array_check); 
     }
+
     dataSend() {//databaseへ
         if(this.array_check.includes(2)) {
             alert('選択していない場所があります。');
@@ -281,6 +285,7 @@ export default class edit extends Vue {
             this.storage_image[0] = this.url;
             
         } 
+
         const editNum = String(this.$route.query.contents);
         const name = this.$store.state.username;
         //const post_image = (num_edit: string) => {
@@ -313,7 +318,9 @@ export default class edit extends Vue {
                 formData.append(first_parameter[i], second_parameter[i]);
             }
         console.log(formData);
+
         if(editNum === 'new_post') {//paramsがこの文字のときは編集ではなく投稿
+           
             this.$axios.post('edit', formData)
             .then((response) => {
                 console.log(response);
@@ -321,21 +328,20 @@ export default class edit extends Vue {
                 if(res.success === "store_true") {
                     console.log("success");
                     this.$router.push('/myaccount/mypage/album_select/choose_album');
-                    
                 }
             })
             .catch((err) => {
                 console.log(err);
             });
         } else {
+
             formData.append('id', editNum);
             this.$axios.post('edit_update', formData)// + editNum, 
             .then((response) => {
                 const res = response.data;
                 if(res.success === "update_true") {
                     this.$router.push('/myaccount/everyone_page/contents?who=' + name);
-                }
-                
+                }    
             })
             .catch((err) => {
                 console.log(err);
@@ -350,6 +356,7 @@ export default class edit extends Vue {
       @content;
     }
 }
+
 #edit {
     form {
         .img_selector {
@@ -367,14 +374,12 @@ export default class edit extends Vue {
                    display: inline;
                    .second_button {
                        float: right;
-                   }
-                   
+                   }              
                }
                .img_box {
                     p img {
                         width: 100%;
                         background-color: rgba(187, 187, 187, 0.4);
-
                         @include pc {
                             width: 50%;
                             margin-left: 50%;
@@ -387,7 +392,6 @@ export default class edit extends Vue {
                     padding: 20px 0 40px;
                 }
             }
-            
             .comment {
                 textarea {
                     display: block;
@@ -396,8 +400,7 @@ export default class edit extends Vue {
                     font-size: 20px;
                     margin-top: 30px;
                 }
-            }
-            
+            }        
         }
         .right_position {
             text-align: center;
