@@ -58,7 +58,12 @@
         </div>
         <div class="contents picture_word_no">
             <ul class="contents picture_word">
-                <li class="title">写真or文字orなし<br><span v-if="$route.query.select !== 'free'">10個まで選択できます。</span></li>
+                <li class="title">
+                    写真or文字orなし<br>
+                    <span v-if="$route.query.select !== 'free'">
+                        10個まで選択できます。
+                    </span>
+                </li>
                 <li class="to_left">
                     <label class="left_center" v-for="(image, index) in images" :key="image" @change="pictureWord(index)">
                         <input type="radio" name="image" checked>
@@ -84,6 +89,7 @@
                 </div>
                 <div class="file_button button_select" v-if="show_select_picture">
                     <input name="picture" type="file" ref="preview" @change="selectPicture">
+                    <p>2MBまで(スマホをお使いの場合は写真サイズを小さくしてください)</p>
                 </div> 
             </div>
         </div>
@@ -126,280 +132,267 @@ export default class Option extends Vue {
     save_storage: (string | number | ArrayBuffer | null)[] = ["＞", 0, 0, ""];//保存[不等号,目標値,現在値,写真]
     wait_a_while: boolean = false;
     username: string = "";
+    head() {
+        return {
+            title: 'カウンターオプション'
+        }
+    }
+
+    get back_data() {
+        return this.$store.getters.back_data;
+    };
     
     doSplice = (num1: number, num2: number, changed: (string | number | ArrayBuffer | null)) => {//splice function
         this.save_storage.splice(num1, num2, changed);
     };
+
     doArray = (max: number) => {//配列
         for(let i=1; i <= max; i++) {
             this.select_numbers.push({target: i, present: i});
             
         } 
     };
-    head() {
+    
+    beforeMount() { 
+        if(this.$route.query.select !== "free") {
+            console.log('go mount');
+            this.username = String(this.$route.query.select);
+        }  
+    }
+
+    created(): void{//選択の数字
+        this.doArray(200); 
+        //planをvuexに入れる
+        const plan = this.$route.query.select;
+        this.$store.dispatch("planSelect_arrayDelete", plan);
+        console.log(this.imgs_data);
+    }
         
-        return {
-            title: 'カウンターオプション'
+
+    @Watch("back_data")
+    public backData(val: string[]): void {
+        console.log('true dayo');
+
+        if(val.length > 2) {
+            this.wait_a_while = false;
+            setTimeout(() => {
+                location.reload();
+            },1000);
+            const url_name =  this.$route.query.select;
+            this.$router.push('/counterDo/counter_this/countNum?name=' + url_name);
         }
     }
-beforeMount() {
-        
-    if(this.$route.query.select !== "free") {
-        console.log('go mount');
-        this.username = String(this.$route.query.select);
+
+    OKClick(ok_click: boolean) {
+        this.show_phone_desc = ok_click;
+        console.log(ok_click);
     }
-    
-        
-}
-created(): void{//選択の数字
-    this.doArray(200); 
-    //planをvuexに入れる
-    const plan = this.$route.query.select;
-    this.$store.dispatch("planSelect_arrayDelete", plan);
-    console.log(this.imgs_data);
-}
-OKClick(ok_click: boolean) {
-    this.show_phone_desc = ok_click;
-    console.log(ok_click);
-}
-downUp(which_is: number): void {
-    if(which_is == 1) {
-        this.sign = "＞";
-        this.doSplice(0, 1, "＞");
-    } else {
-        this.sign = "＜";
-        this.doSplice(0, 1, "＜");
+
+    downUp(which_is: number): void {
+        if(which_is == 1) {
+            this.sign = "＞";
+            this.doSplice(0, 1, "＞");
+        } else {
+            this.sign = "＜";
+            this.doSplice(0, 1, "＜");
+        }   
     }
-    
-}
-doTargetPresent(event: Event, divide: number): void {
-    if(this.words_data !== []) {//写真や文字入力中のときの目標値・現在値の変更 写真や文字をリセット
-        
-        this.written = "";
-        this.words_data.splice(0, this.words_data.length);
-        this.word_position = 0;
-        this.imgs_data.splice(0, this.imgs_data.length);
-        this.count_num = 0;
-    }
-    const target_present = (<HTMLInputElement>event.target).value;
-    
-    if(divide === 1) {
-        this.doSplice(1, 1, Number(target_present));
-    } else {
-        this.doSplice(2, 1, Number(target_present));
-    }
-}
-selectPicture(e: Event){//写真
-    const file = (<HTMLInputElement>e.target).files![0];
-    const selector_img_data = (img: (string | ArrayBuffer | null)) => {//画像データの扱いを実行(ここから)
-        if(this.count_num > 9) {//10個まで
-            
-            return;
-        }
-        let change_num = 0;
-        if(this.$route.query.select === "free") {//パラメーターがfreeのときは固定
-            change_num = 1;
+
+    doTargetPresent(event: Event, divide: number): void {
+        if(this.words_data !== []) {//写真や文字入力中のときの目標値・現在値の変更 写真や文字をリセット     
+            this.written = "";
+            this.words_data.splice(0, this.words_data.length);
+            this.word_position = 0;
+            this.imgs_data.splice(0, this.imgs_data.length);
             this.count_num = 0;
-            this.imgs_data.splice(1, 1);//はてなを削除
-            this.doSplice(3, 1, file.name);
-            
-        } else {//free以外のとき
-            if(this.save_storage[0] === "＜") {
-                if(typeof(this.save_storage[1]) === "number" && typeof(this.save_storage[2]) === "number") {//NUMBERのとき
-                    const differential: number = this.save_storage[2] - this.save_storage[1];//＜のときの差分
-                
-                    if(differential <= this.count_num) {//これ以上の画像追加はできない
-               
-                        return;
+        }
+        const target_present = (<HTMLInputElement>event.target).value;
+    
+        if(divide === 1) {
+            this.doSplice(1, 1, Number(target_present));
+        } else {
+            this.doSplice(2, 1, Number(target_present));
+        }
+    }
+
+    selectPicture(e: Event){//写真
+        const file = (<HTMLInputElement>e.target).files![0];
+        const selector_img_data = (img: (string | ArrayBuffer | null)) => {//画像データの扱いを実行(ここから)
+            if(this.count_num > 9) {//10個まで
+                return;
+            }
+            let change_num = 0;
+            if(this.$route.query.select === "free") {//パラメーターがfreeのときは固定
+                change_num = 1;
+                this.count_num = 0;
+                this.imgs_data.splice(1, 1);//はてなを削除
+                this.doSplice(3, 1, file.name);       
+            } else {//free以外のとき
+                if(this.save_storage[0] === "＜") {
+                    if(typeof(this.save_storage[1]) === "number" && typeof(this.save_storage[2]) === "number") {//NUMBERのとき
+                        const differential: number = this.save_storage[2] - this.save_storage[1];//＜のときの差分                
+                        if(differential <= this.count_num) {//これ以上の画像追加はできない        
+                            return;
+                        }
                     }
                 }
-            }
-            if(this.count_num === 0) {//はじめの１回
-                change_num = 1;
-                //はてなを追加
-                this.imgs_data.splice(1, 0, require("@/static/edit/hatena.png"));
+
+                if(this.count_num === 0) {//はじめの１回
+                    change_num = 1;
+                    //はてなを追加
+                    this.imgs_data.splice(1, 0, require("@/static/edit/hatena.png"));
                 
-            } else if(this.count_num === 9) {
-                this.imgs_data.splice(9, 1);//はてなを削除
+                } else if(this.count_num === 9) {
+                    this.imgs_data.splice(9, 1);//はてなを削除
+                }
+            }
+            this.imgs_data.splice(this.count_num, change_num, img);//配列を変える
+            this.post_image.splice(this.count_num, change_num, file);
+            this.count_num++;//配列の順番を+1
+        }
+        const reader = new FileReader();
+        reader.addEventListener('load', () => {
+            const result = reader.result;          
+            selector_img_data(result);//画像データの扱いを実行
+        });
+        reader.readAsDataURL(file);//URL作成 
+    }   
+
+    decidedWord(): void {//文字
+        if(this.$route.query.select === "free") {
+            this.words_data.splice(0, 1, this.written);
+            this.doSplice(3, 1, this.written);
+        } else {
+            if(this.save_storage[0] === "＜") {
+                if(typeof(this.save_storage[1]) === "number" && typeof(this.save_storage[2]) === "number") {
+                    const differential: number = Number(this.save_storage[2]) - Number(this.save_storage[1]);//＜のときの差分
+      
+                    if(differential <= this.word_position) {//これ以上の画像追加はできない       
+                        return;
+                    }
+                }           
+            }
+            if(this.word_position < 10) {//10まで追加できる
+                this.words_data.splice(this.word_position, 0, this.written);
+                this.written = "";
+                this.word_position++;
+            }      
+        }
+    }
+
+    pictureWord(index: number): void {//写真、文字を選択した時に写真か文字の追加
+        if(index == 0) {//写真
+            this.show_select_picture = true;
+            this.show_select_word = false;
+            this.written = "";
+        } else if(index == 1){//文字
+            this.show_select_word = true;
+            this.show_select_picture = false;
+        } else {//なし
+            this.show_select_word = false;
+            this.show_select_picture = false;
+            this.written = "";
+            this.doSplice(3, 1, "なし");
+        }
+    }  
+
+    toNext(row: [string, number, number, string]): void {
+        const send_data_go = () => {//実行
+            let send_array: (string | ArrayBuffer | null)[] = this.words_data;//文字のデータを送る
+            if(this.$route.query.select !== "free") {//パラメータがfree以外のとき        
+                if(this.show_select_picture) {//写真のデータを送る
+                    for(let i=0; i < this.post_image.length; i++) {
+                        send_array.splice(i, 1, this.post_image[i].name);
+                    }          
+                }
+                console.log(send_array);
+                if(!this.show_select_word && !this.show_select_picture) {//ナシを選択したときのデータ
+                    send_array.splice(0, 0, "");
+                }
+                if(send_array.length === 0) {//写真、文字を選択したにもかかわらず、空だったとき
+                    this.attention = "写真または文字がありません。";
+                    return;
+                }
+                console.log(send_array + 'ui');   
+            }
+            let send_contents = "img";//画像か写真か
+            //データをVuexへ
+            const url_name =  this.$route.query.select;
+            if(!this.show_select_picture) {//画像選択していないとき
+                if(this.show_select_word) {//文字を選択したとき
+                    send_contents = "word";
+                } else {//なしを選択したとき
+                    send_contents = "nothing";
+                }
+                row.splice(4, 0, send_contents);
+                console.log(row);
+                console.log(send_array);
+
+                this.$store.dispatch("inSelectData", send_array);
+                this.$store.dispatch("inData", row);//基本データ
+            
+                this.$router.push('/counterDo/counter_this/countNum?name=' + url_name);
+                return;
+            }
+
+            console.log(row);
+        
+            //画像データをサーバーへ
+            console.log(this.post_image);
+            const formData = new FormData();
+            for(let key=0; key < this.post_image.length; key++) {
+                formData.append(String(key), this.post_image[key]);
+            }
+            formData.append('data_length', String(this.post_image.length));
+            console.log(formData);
+            this.$axios.post('counter_image', formData)
+            .then((response) => {
+                console.log(response.data[0]);
+                row.splice(4, 0, send_contents);
+                console.log(row);
+                console.log(send_array);
+                if(this.$store.state.select_plan === "free") {
+                    row[3] = response.data[0];
+                } else {
+                    for(let i=0; i < response.data.length; i++) {
+                        send_array.splice(i, 1, response.data[i]);
+                    }
+                    this.$store.dispatch("inSelectData", send_array);
+                }
+                this.$store.dispatch("inData", row);//基本データ
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+            this.wait_a_while = true;
+            console.log(this.words_data);
+        }
+
+        if(this.wait_a_while === true) {//画像待っているときに再び押せないようにする
+            return;
+        }
+
+        if(this.save_storage[0] === "＞") {
+            if(typeof(this.save_storage[1]) === "number" && typeof(this.save_storage[2]) === "number") {
+                if(this.save_storage[1] > this.save_storage[2]) {
+                    //値が正しければ次へ実行
+                    send_data_go();
+                    return;     
+                } 
             }
         }
-        this.imgs_data.splice(this.count_num, change_num, img);//配列を変える
-        this.post_image.splice(this.count_num, change_num, file);
-        this.count_num++;//配列の順番を+1
-    }
-    const reader = new FileReader();
-    reader.addEventListener('load', () => {
-        const result = reader.result;
-            
-        selector_img_data(result);//画像データの扱いを実行
-    })
-    reader.readAsDataURL(file);//URL作成
-    
-}
-decidedWord(): void {//文字
-    if(this.$route.query.select === "free") {
         
-        this.words_data.splice(0, 1, this.written);
-        this.doSplice(3, 1, this.written);
-    } else {
         if(this.save_storage[0] === "＜") {
             if(typeof(this.save_storage[1]) === "number" && typeof(this.save_storage[2]) === "number") {
-                const differential: number = Number(this.save_storage[2]) - Number(this.save_storage[1]);//＜のときの差分
-      
-                if(differential <= this.word_position) {//これ以上の画像追加はできない
-               
+                if(this.save_storage[1] < this.save_storage[2]) {
+                    console.log('ui');
+                    //値が正しければ次へ実行
+                    send_data_go();
                     return;
                 }
             }
-            
         }
-        if(this.word_position < 10) {//10まで追加できる
-            this.words_data.splice(this.word_position, 0, this.written);
-            this.written = "";
-            this.word_position++;
-        }
-        
-    }
- 
-}
-pictureWord(index: number): void {//写真、文字を選択した時に写真か文字の追加
-    if(index == 0) {//写真
-        this.show_select_picture = true;
-        this.show_select_word = false;
-        this.written = "";
-    } else if(index == 1){//文字
-        this.show_select_word = true;
-        this.show_select_picture = false;
-    } else {//なし
-        this.show_select_word = false;
-        this.show_select_picture = false;
-        this.written = "";
-        this.doSplice(3, 1, "なし");
-    }
-}  
-get back_data() {
-    return this.$store.getters.back_data;
-}
-@Watch("back_data")
-public backData(val: string[]): void {
-    console.log('true dayo');
-
-    if(val.length > 2) {
-        this.wait_a_while = false;
-        setTimeout(() => {
-            location.reload();
-        },1000);
-        const url_name =  this.$route.query.select;
-        this.$router.push('/counterDo/counter_this/countNum?name=' + url_name);
-    }
-}
-toNext(row: [string, number, number, string]): void {
-    const send_data_go = () => {//実行
-        let send_array: (string | ArrayBuffer | null)[] = this.words_data;//文字のデータを送る
-        if(this.$route.query.select !== "free") {//パラメータがfree以外のとき
-            
-            if(this.show_select_picture) {//写真のデータを送る
-                for(let i=0; i < this.post_image.length; i++) {
-                    send_array.splice(i, 1, this.post_image[i].name);
-                }
-                    
-            }
-            console.log(send_array);
-            if(!this.show_select_word && !this.show_select_picture) {//ナシを選択したときのデータ
-                send_array.splice(0, 0, "");
-            }
-            if(send_array.length === 0) {//写真、文字を選択したにもかかわらず、空だったとき
-                this.attention = "写真または文字がありません。";
-                return;
-            }
-            console.log(send_array + 'ui');
-            //this.$store.dispatch("inSelectData", send_array);
-                
-        }
-        let send_contents = "img";//画像か写真か
-        //データをVuexへ
-        const url_name =  this.$route.query.select;
-        if(!this.show_select_picture) {//画像選択していないとき
-            if(this.show_select_word) {//文字を選択したとき
-                send_contents = "word";
-            } else {//なしを選択したとき
-                send_contents = "nothing";
-            }
-            row.splice(4, 0, send_contents);
-            console.log(row);
-            console.log(send_array);
-            //this.$router.push('/counterDo/counter_this/' + url_name);
-            this.$store.dispatch("inSelectData", send_array);
-            this.$store.dispatch("inData", row);//基本データ
-            
-            this.$router.push('/counterDo/counter_this/countNum?name=' + url_name);
-            return;
- 
-        }
-        //row.splice(4, 0, send_contents);
-        //this.$store.dispatch("inData", row);//基本データ
-        console.log(row);
-        
-        //画像データをサーバーへ
-        console.log(this.post_image);
-        const formData = new FormData();
-        for(let key=0; key < this.post_image.length; key++) {
-            formData.append(String(key), this.post_image[key]);
-        }
-        formData.append('data_length', String(this.post_image.length));
-        console.log(formData);
-        this.$axios.post('counter_image', formData)
-        .then((response) => {
-            console.log(response.data[0]);
-            row.splice(4, 0, send_contents);
-            console.log(row);
-            console.log(send_array);
-            if(this.$store.state.select_plan === "free") {
-                row[3] = response.data[0];
-            } else {
-                for(let i=0; i < response.data.length; i++) {
-                    send_array.splice(i, 1, response.data[i]);
-                }
-                this.$store.dispatch("inSelectData", send_array);
-            }
-            this.$store.dispatch("inData", row);//基本データ
-        })
-        .catch((err) => {
-            console.log(err);
-        });
-        this.wait_a_while = true;
-        console.log(this.words_data);
-
-    }
-
-    if(this.wait_a_while === true) {//画像待っているときに再び押せないようにする
-        return;
-    }
-
-    if(this.save_storage[0] === "＞") {
-        if(typeof(this.save_storage[1]) === "number" && typeof(this.save_storage[2]) === "number") {
-            if(this.save_storage[1] > this.save_storage[2]) {
-                //値が正しければ次へ実行
-                send_data_go();
-                return;
-                
-            } 
-        }
-    }
-        
-    if(this.save_storage[0] === "＜") {
-        if(typeof(this.save_storage[1]) === "number" && typeof(this.save_storage[2]) === "number") {
-            if(this.save_storage[1] < this.save_storage[2]) {
-                console.log('ui');
-                //値が正しければ次へ実行
-                send_data_go();
-                return;
-            }
-        }
-    
-    }
-    this.attention = "目標値・現在値が正しくありません";
-   
+        this.attention = "目標値・現在値が正しくありません"; 
     }
 }
 </script>
@@ -409,11 +402,13 @@ toNext(row: [string, number, number, string]): void {
             @content;
         }
     }
+
     html { /*背景色*/
         background-color: #09eea999;
     }
+
     .first_option {/*白い部分*/
-        $em_size: 2em;/*em*/
+        $em_size: 2em;
         background-color: white;
         text-align: center;
         margin-top: $em_size * 6;
@@ -443,7 +438,6 @@ toNext(row: [string, number, number, string]): void {
                 font-size: 20px;
             }
         }
-        
         .to_left {
             
             margin-right: $em_size * 6;
@@ -481,21 +475,23 @@ toNext(row: [string, number, number, string]): void {
                     @include tb {
                         width: 130px;
                     
-                    }
-                    
-                }
-                
+                    }                   
+                }        
             }
             .text_write_in {
                 margin-left: 2rem;
 
                 input {
                     @include tb {
-                        width: 320px;
-                    
+                        width: 320px;    
                     }
+                }            
+            }
+            .file_button {
+                font-size: 20px;
+                p {
+                    padding: 0 10px;
                 }
-                
             }
             .picture_show {
                 width: 890px;
@@ -536,14 +532,11 @@ toNext(row: [string, number, number, string]): void {
                 font-size: 20px;
                 padding: 7px 20px;
                 color:rgb(46, 46, 46);
-            }
-
-            
+            }         
         }
         .button_set {
             margin-top: 30px;
             margin-right: 10px;
-        }
-        
+        }       
     }   
 </style>
