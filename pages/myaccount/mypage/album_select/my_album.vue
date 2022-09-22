@@ -55,9 +55,11 @@ export default class my_album extends Vue {
             title: 'マイアルバム'
         }
     }
+
     mounted() {
         this.username = this.$store.state.username;
         const base_url = process.env.SERVER_URL;
+
         this.$axios.get('my_album_data_get', {
             params: {
                 username: this.username
@@ -74,20 +76,23 @@ export default class my_album extends Vue {
                 }
                 
                 album_content[i].image = base_url + album_content[i].image;
+
                 //日付だけ表示
                 const create_array = album_content[i].created_at.split('T').splice(0, 1);
                 album_content[i].created_at = create_array[0];
                 this.albums_data.splice(i, 0, album_content[i]);
-            }
-            
+            }    
         })
         .catch((err) => {
             console.log(err);
         })
     }
+
     deleteData(del_num: number) {
         const delete_id = this.albums_data[del_num].id;
+
         const can_delete_data = (id: number) => {
+
             this.$axios.delete('delete_album_data/' + id)
             .then((response) => {
                 console.log(response);
@@ -99,8 +104,9 @@ export default class my_album extends Vue {
             })
             .catch((err) => {
                 console.log(err);
-            })
+            });
         }
+
         if(window.confirm('この記録を削除しますか?')) {
             can_delete_data(delete_id);
         }
@@ -115,7 +121,6 @@ export default class my_album extends Vue {
     }
 
     #my_album {
-        
         width: 900px;
         background-color: bisque;
         margin: 20px auto;
@@ -130,10 +135,12 @@ export default class my_album extends Vue {
             float: left;
             padding: 20px 0 0 20px;
         }
+
         .title h1 {
             padding: 80px 0 30px 0;
             
         }
+
         .frame {
             width: 700px;
             margin: 0 auto;
@@ -148,6 +155,7 @@ export default class my_album extends Vue {
                 width: 90%;
             }
         }
+
         .all_box {
             width: 50%;
             border-left: 1px solid red;
@@ -205,6 +213,5 @@ export default class my_album extends Vue {
                border-top: 1px solid red;
             }
         }
-        
     }
 </style>
