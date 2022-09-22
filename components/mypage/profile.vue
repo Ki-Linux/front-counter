@@ -22,6 +22,7 @@ export default class profile extends Vue {
     mounted() {
         console.log(this.send_username);
         this.send_username = this.$store.state.username;
+
         this.$axios.get("account", {
             params: {
                 accountName: this.send_username,
@@ -43,6 +44,7 @@ export default class profile extends Vue {
             console.log(err);
         });
     }
+
     editImgName(which_click: string) {
         const send_img_or_name = (which_send: string) => {
             this.$emit('send_data', which_send);
@@ -84,7 +86,6 @@ export default class profile extends Vue {
                 text-align: center;
                 background-color: rgb(241, 241, 241);
             }
-        }
-        
+        }   
     }
 </style>
