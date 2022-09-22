@@ -10,18 +10,18 @@ export default class completeOption extends Vue {
     get backTargetData() {//目標のデータ　vuexから
         return this.$store.getters.backTargetData;
     }
+
     get showData() {//現在のデータ　vuexから
         if(this.$store.getters.showData === this.backTargetData) {
-            const light = true;
-            return light
-        };
+            return true;
+        }
     }
+
     complete() {
         const vuexData = this.$store.state
         if(vuexData.show_data[0] === this.backTargetData) {
             console.log('complete!');
-            this.$store.dispatch("changeClick", false);
-                
+            this.$store.dispatch("changeClick", false);      
         }
     }
 }
@@ -32,6 +32,7 @@ export default class completeOption extends Vue {
             @content;
         }
     }
+
     #complete_button {
         margin-top: 80px;
         font-size: 50px;
@@ -46,7 +47,6 @@ export default class completeOption extends Vue {
         }
         .Light_up {
             background-color: white;
-        }
-        
+        }  
     }
 </style>
