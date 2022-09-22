@@ -10,21 +10,16 @@ import { Component, Vue } from 'vue-property-decorator';
 @Component
 export default class TopLabel extends Vue {
   toHome(): void {
-    const conf: string = 'フリーカウントでホームに戻るとデータが保存されませんがよろしいですか？';
     const vuexData = this.$store.state;
     if(vuexData.canClick) {//clickできるか(popup)
         let url;
         if(vuexData.select_plan == "free" && vuexData.username == "") {
           url = ('/');
         } else {
-          url = ('/myaccount/mypage/myaccountpage?myname=' + vuexData.username);
-          
+          url = ('/myaccount/mypage/myaccountpage?myname=' + vuexData.username);          
         }
-        
-        this.$router.push(url);
-      
-    }
-        
+        this.$router.push(url);      
+    }        
   }
 }
 </script>
@@ -44,6 +39,5 @@ export default class TopLabel extends Vue {
       line-height: 40px;
       margin-right: 40px;
     }
-  }
-  
+  } 
 </style>
