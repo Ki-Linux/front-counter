@@ -42,6 +42,7 @@ export default class login extends Vue {
             ]
         }
     }
+
     doLogin() {
         console.log("doLogin!");
         this.$axios.post("login", {
@@ -68,10 +69,12 @@ export default class login extends Vue {
                     if(this.$route.query.id === "1" && this.$store.state.back_data.length > 0) {
                         param_url = '/myaccount/mypage/edit/editNum?contents=new_post';
                     }
-                    this.$router.push(param_url);
+
+                    setTimeout(() => {
+                        this.$router.push(param_url);
+                    },3000);                   
                 }
-            }
-            
+            }            
         })
         .catch((err) => {
             console.log(err);
@@ -80,57 +83,59 @@ export default class login extends Vue {
 }
 </script>
 <style lang="scss">
-#login {
-    text-align: center;
-    padding-top: 30px;
-    font-size: 30px;
-    .canSend {
-        float: left;
-        font-size: 15px;
-        padding-left: 10px;
-        animation: name 1s ease 1s 3 normal;
-    }
-    @keyframes name {
-        from {
-            color: black;
-        }
-        to {
-            color: rgb(0, 51, 192);
-        }
-    }
-    .title h1 {
+    #login {
+        text-align: center;
         padding-top: 30px;
-        font-size: 40px;
-        color:rgb(121, 121, 121);
-    }
-    .name_space {
-        margin: 30px 0;
-        p input {
-            padding: 6px;
-            width: 300px;
-        }
-        .forget_password {
+        font-size: 30px;
+        .canSend {
+            float: left;
             font-size: 15px;
+            padding-left: 10px;
+            animation: name 1s ease 1s 3 normal;
         }
-    }
-    input[type="submit"] {
-        -webkit-appearance: none;
-        color: rgb(36, 36, 36);
-        background-color: rgba(204, 204, 204, 0.6);
-    }
-    .toNew {
-        font-size: 15px;
-        padding: 20px;
-        
-        .new_add {
-            
-            color: blue;
+        @keyframes name {
+            from {
+                color: black;
+            }
+            to {
+                color: rgb(0, 51, 192);
+            }
         }
-        
-    }
 
-    label {
-        color:rgb(85, 85, 85);
+        .title h1 {
+            padding-top: 30px;
+            font-size: 40px;
+            color:rgb(121, 121, 121);
+        }
+
+        .name_space {
+            margin: 30px 0;
+            p input {
+                padding: 6px;
+                width: 300px;
+            }
+            .forget_password {
+                font-size: 15px;
+            }
+        }
+
+        input[type="submit"] {
+            -webkit-appearance: none;
+            color: rgb(36, 36, 36);
+            background-color: rgba(204, 204, 204, 0.6);
+        }
+
+        .toNew {
+            font-size: 15px;
+            padding: 20px;
+        
+            .new_add {         
+                color: blue;
+            }     
+        }
+
+        label {
+            color:rgb(85, 85, 85);
+        }
     }
-}
 </style>
