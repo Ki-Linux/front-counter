@@ -24,9 +24,11 @@ export default class contract extends Vue {
             ]
         }
     }
+    
     sendContactMail() {
         const content = this.content_address.content;
         const address = this.content_address.address;
+
         if(content === "") {//不足
             this.attention = "中身が入力されていません。";
             return;
@@ -34,7 +36,8 @@ export default class contract extends Vue {
             this.attention = "メールアドレスが入力されていません。";
             return;
         }
-        this.$axios.post('sendContactMail', {
+
+        this.$axios.post('sendContactMail', {//メールを送る
             content: content,
             address: address,
         })
@@ -57,12 +60,14 @@ export default class contract extends Vue {
     font-size: 20px;
     text-align: center;
     padding-top: 30px;
+
     textarea {
         margin-top: 20px;
         padding: 5px;
         width: 300px;
         text-align: left;
     }
+
     input {
         
         &[type="mail"] {
