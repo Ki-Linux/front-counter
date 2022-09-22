@@ -36,14 +36,16 @@
 
         get showData() {//free planのときのみ
             return this.$store.getters.showData;
-        };
+        }
+
         get showSelect() {//選択肢の表示
             return this.$store.getters.showSelect;
-        };
+        }
         
         get backTargetData() {//目標のデータ vuexから
             return this.$store.getters.backTargetData;
-        };
+        }
+
         get showWordImg() {//img data vuexから show_data[1]
             let arrayWordImg: string[] = [];
             let into_data = this.$store.getters.showWordImg;//freeプランのときは同じ数を入れる
@@ -51,6 +53,7 @@
                 if(this.$store.state.select_plan !== "free") {
                     into_data = this.$store.state.show_data[i + 1];//freeプラン以外のときは違うデータを代入する
                 }
+
                 //サーバーからの画像
                 let image = into_data;
                 if(this.$store.state.back_data[4] === "img") {
@@ -60,32 +63,29 @@
                 arrayWordImg.splice(i, 0, image);
             }
             return arrayWordImg;
-    
         }
+
         @Watch("showWordImg")
         public show_word_img(val: string[]): void {
             console.log('true of showWordImg');
             this.showImageWord = val;
-
         }
-        mounted() {
-            
+
+        mounted() {    
             this.base_url = process.env.SERVER_URL;
             const image_data = this.$store.state.back_select_data;
             for(let i=0; i < image_data.length; i++) {
                 
                 this.back_select_data.splice(i, 0, image_data[i]);
             }
-
-            this.showImageWord = this.showWordImg;
-            
-        };
+            this.showImageWord = this.showWordImg;   
+        }
 
         chooseData(choose_num: number) {//クリックした選択肢のデータ
-            this.$store.dispatch("chooseData", [this.back_select_data[choose_num], false]);//選択した文字、画像データ 選択データを閉じる
+            //選択した文字、画像データ 選択データを閉じる
+            this.$store.dispatch("chooseData", [this.back_select_data[choose_num], false]);
             console.log(choose_num);
-        }
-        
+        }     
     }
 </script>
 <style lang="scss">
@@ -127,13 +127,11 @@
         .slide-enter-active{
             transition: opacity 0.5s, transform 0.5s;
         }
-        .select_bord {
-            
+        .select_bord {       
             width: 100%;
             display: flex;
             flex-wrap: wrap;
-            background-color:rgba(24, 24, 24, 0.8);
-            
+            background-color:rgba(24, 24, 24, 0.8);       
             ul {
                 font-size: 30px;
                 color: white;
@@ -156,11 +154,9 @@
                             
                             width: 60px;
                         }
-                    }
-                    
+                    }                 
                 }
             }
         }   
- 
     }
 </style>
