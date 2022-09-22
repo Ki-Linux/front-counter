@@ -1,5 +1,3 @@
-
-  
 <template>
     <div id="pop_up_name">
         <div class="title_desc">
