@@ -15,6 +15,7 @@ export default class send extends Vue {
             title: 'パスワード確認完了'
         }
     }
+    
     back() {
        
        this.$router.push('/addInfo/login');
