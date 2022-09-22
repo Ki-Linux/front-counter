@@ -51,7 +51,7 @@
                         <img :src="details_list.picture" alt="写真">
                     </li>
                     <li>{{ details_list.my_comment }}</li>
-                    <li>{{ details_list.updated_at }}</li>
+                    <li><span>編集日:</span>{{ details_list.updated_at }}</li>
                     <li @click="detailData('other')" v-if="$route.query.who === 'everyone'">
                         <img :src="icon_point.my_icon" alt="not_img">
                     </li>
@@ -119,14 +119,35 @@ import confirmPerson from '@/components/confirmation/confirm_person.vue';
 })
 export default class everyone extends Vue {
     url: string = "";
-    //post_url: string = "";
     detail_profile: { username: string, user_icon: string|ArrayBuffer|null, user_comment: string }= { username: '', user_icon: '', user_comment: '' };
-    details_list: { id: number, picture: string|ArrayBuffer|null, my_comment: string, username: string, updated_at: string, can_see: number } = { id: 0, picture: '', my_comment: '', username: '', updated_at: '', can_see: 0 };
+    details_list: { 
+        id: number, 
+        picture: string|ArrayBuffer|null, 
+        my_comment: string, 
+        username: string, 
+        updated_at: string, 
+        can_see: number 
+    } = 
+    { 
+        id: 0, 
+        picture: '', 
+        my_comment: '', 
+        username: '', 
+        updated_at: '', 
+        can_see: 0 
+    };
     my_icon: string|ArrayBuffer|null = "";//自分のアイコン画像
     username: string = "";
     show_detail: boolean = false;
     detail_contents: string = "";
-    icon_point: { my_icon: string, good_point: number } = { my_icon: '', good_point: 0 };
+    icon_point: {
+        my_icon: string, 
+        good_point: number 
+    } = 
+    { 
+        my_icon: '', 
+        good_point: 0 
+    };
     view_point: number = 0;
     show_heart: boolean = true;//ハートを表示するかしないか
     show_view: boolean = true;
@@ -152,6 +173,7 @@ export default class everyone extends Vue {
         
         this.url = '' + process.env.SERVER_URL;
         if(this.$route.query.who !== "everyone") {
+
             this.$axios.get('account', {
                 params: {
                     accountName: this.username
@@ -168,6 +190,7 @@ export default class everyone extends Vue {
             });
         }
     }
+
     deleteReport(which_contents: string) {
         const num = this.get_click_num_delete_report;//クリックしているコメント番号取得
         const list = this.comment_lists[num];
@@ -213,6 +236,7 @@ export default class everyone extends Vue {
                 }
                 
             }
+
             this.$axios(method_url)
             .then((response) => {
                 console.log(response);
@@ -222,7 +246,6 @@ export default class everyone extends Vue {
                     this.comment_lists.splice(num, 1);
                     this.deleteMyComment = false;
                 }
-        
             })
             .catch((err) => {
                 console.log(err);
@@ -232,10 +255,12 @@ export default class everyone extends Vue {
         delete_report(which_contents);
         this.show_select_del_or_tell = false;
     }
+
     closeSelect() {
         this.show_select_del_or_tell = false;//ボタンリスト初期化
         this.deleteMyComment = false;//削除ボタン初期化
     }
+
     closePop() {
         this.show_detail = false;
         this.show_edit = true;
@@ -249,6 +274,7 @@ export default class everyone extends Vue {
         this.detail_profile.username = this.username;//name自分
         this.detail_profile.user_icon = this.my_icon;//icon自分
     }
+
     contentsImg(value: string) {
         console.log(value);
         
@@ -257,6 +283,7 @@ export default class everyone extends Vue {
         this.my_icon = value;//保存される不変のアイコン(closeのとき用)
         
     }
+
     detailData(who_icon: string, icon_num: number) {
         this.detail_contents = "profile";
         this.show_detail = true;
@@ -275,6 +302,7 @@ export default class everyone extends Vue {
         } else if(who_icon === "me") {
             this.show_edit = false;
         }
+
         this.$axios.get('get_comment', {
             params: {
                 username: name,
@@ -291,12 +319,14 @@ export default class everyone extends Vue {
         })
         .catch((err) => {
             console.log(err);
-        })
+        });
     }
+
     listDetail(value: [boolean, { id: number, picture:string|ArrayBuffer|null, my_comment: string, username: string, updated_at: string, can_see: number }]) {
         this.detail_contents = "list";
         this.show_detail = value[0];
         this.details_list = value[1];
+
         this.$axios.get('get_img_good_comment', {
             params: {
                 id_data: this.details_list.id,
@@ -328,8 +358,10 @@ export default class everyone extends Vue {
             }
         })
     }
+
     changeHeart() {
         const plus_one = (id: number) => {
+
             this.$axios.put('details_good_more/' + id, {
                 username: this.username,
             })
@@ -338,7 +370,7 @@ export default class everyone extends Vue {
             })
             .catch((err) => {
                 console.log(err);
-            })
+            });
         }
         if(this.username !== this.details_list.username && this.heart === false) {//nameが同じ時はいいねできない
             
@@ -346,8 +378,8 @@ export default class everyone extends Vue {
             plus_one(this.details_list.id);
         }
     }
+
     toCommentList() {
-        
         const listShow = (id: number) => {
             this.$axios.get('get_comment_data', {
                 params: {
@@ -362,8 +394,7 @@ export default class everyone extends Vue {
                 }
                 console.log(res);
                 let comment_name_icon = [{other_comment: '', username: '', icon: '', updated_at: '' }]
-                for(let i=0; i < res.name_icon.length; i++) {
-            
+                for(let i=0; i < res.name_icon.length; i++) {    
                     for(let j=0; j < res.name_comment.length; j++) {  
                     
                         comment_name_icon.splice(j, 1, res.name_comment[j]);
@@ -374,8 +405,8 @@ export default class everyone extends Vue {
                         
                         }
                     }
-                
                 }
+
                 let written_date
                 let written_time
                 let hour_split
@@ -410,6 +441,7 @@ export default class everyone extends Vue {
             listShow(this.details_list.id);
         }
     }
+
     addComment() {
         const now = new Date();
         const Year = now.getFullYear();
@@ -435,6 +467,7 @@ export default class everyone extends Vue {
         }
         //UIに表示
         this.comment_lists.push({ username: this.username, user_icon: this.detail_profile.user_icon, user_comment: this.comment_add, date: time });
+        
         this.$axios.post('add_comment_data', {
             id_data: this.details_list.id,//どのデータか識別するため
             username: this.username,
@@ -443,13 +476,14 @@ export default class everyone extends Vue {
         })
         .then((response) => {
             console.log(response.data);
-  
         })
         .catch((err) => {
             console.log(err);
-        })
+        });
+
         this.comment_add = "";
     }
+
     deleteOrTell(num_str: string|number) {
         this.get_click_num_delete_report = Number(num_str);
         if(this.show_select_del_or_tell === false) {
@@ -458,23 +492,25 @@ export default class everyone extends Vue {
                 this.post_report = true;
                 return;
             }
-            if(this.comment_lists[Number(num_str)].username === this.username) {//自分の番号だけ
-                
+            if(this.comment_lists[Number(num_str)].username === this.username) {//自分の番号だけ       
                 this.deleteMyComment = true;//ボタンを表示する
             }
         }
-        
     }
+
     toOneAccountListPage(one_list_name: string) {//その人のアカウントの投稿ページへ
         this.show_detail = false;
         this.$router.push("/myaccount/everyone_page/contents?who=" + one_list_name);
     }
+
     EditDelete(project: string) {
         const id = this.details_list.id;
         if(project === "edit") {
             this.$router.push("/myaccount/mypage/edit/editNum?contents=" + id);
         } else if(project === "delete") {
+
             const go_delete = (delete_id: number) => {
+
                 this.$axios.delete("edit_del/" + delete_id)
                 .then((response) => {
                     const can_delete = response.data.can_delete;
@@ -484,22 +520,19 @@ export default class everyone extends Vue {
                         this.$router.push('/myaccount/everyone_page/contents?who=' + this.username);
                         setTimeout(() => {
                             location.reload();
-                        },1000);
-                        
+                        },1000);     
                     }
-                    
                 })
                 .catch((err) => {
                     
                     console.log(err);
-                })
-                
+                });
             }
+
             if(window.confirm('削除しますか?')) {
-                go_delete(id);
+                go_delete(id);//削除の処理を実行
             }
         }
-        
     }
 }
 </script>
@@ -509,8 +542,10 @@ export default class everyone extends Vue {
             @content;
         }
     }
+
     #everyone {
         padding: 20px 0;
+
         .delete_tell_pop {
             position: fixed;
             margin-top: 20%;
@@ -531,8 +566,8 @@ export default class everyone extends Vue {
                 margin: 50px 5px;
             }
         }
+
         .set_pop {
- 
             margin-left: 50%;
             transform: translateX(-50%);
             background-color: rgb(193, 255, 234);
@@ -563,9 +598,7 @@ export default class everyone extends Vue {
                             font-size: 15px;
                         }
                     }
-                }
-                
-                
+                }            
             }
             .detail {
                 text-align: center;
@@ -577,8 +610,7 @@ export default class everyone extends Vue {
                             transform: translateX(-50%);
                         }
                     }
-                }
-                
+                }         
             }
             .profile_detail {
                 margin-right: 30px;
@@ -611,11 +643,10 @@ export default class everyone extends Vue {
                             }
                             
                         }
-                    }
-                    
-                }
-                
+                    }   
+                }         
             }
+
             .list_detail {
                 p {
                     position: fixed;
@@ -661,8 +692,7 @@ export default class everyone extends Vue {
                         }
                         &:nth-of-type(3) {
                             font-size: 15px;
-                            padding-top: 10px;
-                            padding-left: 55%;
+                            padding: 10px 0 10px 35%;
 
                         }
                         &:nth-of-type(4) {
@@ -676,10 +706,10 @@ export default class everyone extends Vue {
                                 z-index: 5;
                                 background-color: rgba(0, 0, 0, 0.4);
                             }
-                        }
-                        
+                        }               
                     }
                 }
+
                 .good_and_comment {
                     .change_heart_on {
                         background: url("@/static/list_detail/heart_color.png") left center no-repeat;
@@ -721,7 +751,6 @@ export default class everyone extends Vue {
                         @include sp {
                             margin-right: 0;
                         }
-                            
                         li {
                                
                             &:first-of-type {
@@ -729,18 +758,14 @@ export default class everyone extends Vue {
                                     position: relative;
                                     margin-right: 250px;
                                 }
-                                img {
-                                    
+                                img {          
                                     float: left;
                                     width: 70px;
                                     height: 70px;
                                     border-radius: 50%;
                                     z-index: 5;
-                                    background-color: rgba(0, 0, 0, 0.4);
-                                   
-                                
-                                }
-                                
+                                    background-color: rgba(0, 0, 0, 0.4); 
+                                }               
                             }
                             &:nth-of-type(2), &:nth-of-type(3) {
                                 position: fixed;
@@ -750,13 +775,11 @@ export default class everyone extends Vue {
                                     right: 5px;
                                 }
                             }
-                            &:nth-of-type(2) {
-                                   
+                            &:nth-of-type(2) {      
                                 cursor: default;
                                 font-size: 15px;
                                 padding: 0 10px;
-                                background-color: rgba(185, 185, 185, 0.7);
-   
+                                background-color: rgba(185, 185, 185, 0.7);   
                             }
                             &:nth-of-type(3) {
                                 
@@ -777,8 +800,8 @@ export default class everyone extends Vue {
                                 }
                             }
                         }
-   
                     }
+
                     form {
                         margin-bottom: 90px;
                         margin-left: 20px;
@@ -814,6 +837,7 @@ export default class everyone extends Vue {
                 }
             }
         }
+        
         .everyone_list_my_name {
             display: flex;
             padding-top: 100px;
