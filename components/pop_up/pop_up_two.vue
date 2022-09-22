@@ -26,10 +26,12 @@ export default class popUpTwo extends Vue {
     closed() {
         this.$emit('pop_up_show', false);
     }
+
     nextGo(which_is: string) {
         if(which_is === "same") {
             this.$router.push('/counterDo/optionData/optionNum?select=free');
-        } else {//diffeerenceのとき
+        } else {
+            //diffeerenceのとき
             const name = this.$store.state.username;
             this.$router.push('/counterDo/optionData/optionNum?select=' + name);
         }
@@ -37,57 +39,55 @@ export default class popUpTwo extends Vue {
 }
 </script>
 <style lang="scss">
-@mixin sp {
-  @media (max-width: 560px) {
-    @content;
-  }
-}
+    @mixin sp {
+        @media (max-width: 560px) {
+            @content;
+        }
+    }
 
-#pop_up_two {
-    position: absolute;
-    background-color: rgb(177, 255, 167);
-    font-size: 25px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    padding: 20px 30px 30px 30px;
-    z-index: 10;
-
-    @include sp {
-        width: 90%;
-        top: 60%;
+    #pop_up_two {
+        position: absolute;
+        background-color: rgb(177, 255, 167);
+        font-size: 25px;
+        top: 50%;
         left: 50%;
-    }
+        transform: translate(-50%, -50%);
+        text-align: center;
+        padding: 20px 30px 30px 30px;
+        z-index: 10;
 
-    .desc_and_close {
-        p {
-            &:first-of-type {
-                float: right;
-                margin-left: 10px;
-                
+        @include sp {
+            width: 90%;
+            top: 60%;
+            left: 50%;
+        }
+
+        .desc_and_close {
+            p {
+                &:first-of-type {
+                    float: right;
+                    margin-left: 10px;  
+                }
+                &:nth-of-type(2) {
+                    padding-top: 40px;
+                }
             }
-            &:nth-of-type(2) {
-                padding-top: 40px;
+        }
+
+        .select_button {
+            margin-top: 30px;
+            button {
+                padding: 10px 40px;
+                vertical-align: middle;      
+                &:first-of-type {
+                    background-color: rgb(255, 185, 185);
+                    margin-right: 10px;
+                }
+                &:nth-of-type(2) {
+                    background-color: rgb(185, 198, 255);
+                    margin-right: 10px;
+                }           
             }
         }
     }
-    .select_button {
-        margin-top: 30px;
-        button {
-            padding: 10px 40px;
-            vertical-align: middle;
-            
-            &:first-of-type {
-                background-color: rgb(255, 185, 185);
-                margin-right: 10px;
-            }
-            &:nth-of-type(2) {
-                background-color: rgb(185, 198, 255);
-                margin-right: 10px;
-            }
-            
-        }
-    }
-}
 </style>
