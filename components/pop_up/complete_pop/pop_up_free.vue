@@ -1,18 +1,16 @@
-
-  
 <template>
     <div id="pop_up_free">
         <div class="title_desc">
-                <h1>完成しました!!</h1>
-                <div class="canDesc">
-                    <ul>
-                        <li>ログインで</li>
-                        <li>自分専用のアルバムに記録</li>    
-                        <li>記録をシェア</li>
-                        <li>みんなの投稿を見る</li>
-                        <li>ができます!</li>
-                    </ul>
-                </div>
+            <h1>完成しました!!</h1>
+            <div class="canDesc">
+                <ul>
+                    <li>ログインで</li>
+                    <li>自分専用のアルバムに記録</li>    
+                    <li>記録をシェア</li>
+                    <li>みんなの投稿を見る</li>
+                    <li>ができます!</li>
+                </ul>
+            </div>
         </div>
         <ul class="merit">
             <p>このサイトで<span>シェア</span>すると</p>
@@ -28,7 +26,9 @@
         <div class="selector">
             <button @click="toLogin">ログインする</button>
             <label class="twitter" @click="twitterGo">
-                <p><img src="../../../static/twitter/twitter_logo.png" alt="twitter"></p>
+                <p>
+                    <img src="../../../static/twitter/twitter_logo.png" alt="twitter">
+                </p>
                 Twitterでシェア
             </label>
             <nuxt-link class="back_home" to="/">
@@ -44,6 +44,7 @@ export default class popUpFree extends Vue {
     toLogin() {
         this.$router.push('/addInfo/login');
     }
+
     twitterGo() {
         let twitterURL = 'https://twitter.com/intent/tweet';
         twitterURL += '?text=' + '';
@@ -53,9 +54,19 @@ export default class popUpFree extends Vue {
 }
 </script>
 <style lang="scss">
-.title_desc {
+    @mixin tb {
+        @media (max-width: 900px) {
+            @content;
+        }
+    }
+
+    .title_desc {
         margin-top: 70px;
         text-align: center;
+        @include tb {
+            margin-top: 240px;
+        }
+
         h1 {
             font-size: 40px;
         }
@@ -86,6 +97,7 @@ export default class popUpFree extends Vue {
             }
         }
     }
+
     .merit {
         color: rgb(49, 49, 49);
          
@@ -95,43 +107,41 @@ export default class popUpFree extends Vue {
             margin-right: 30px;
             span {
                 color: rgba(150, 177, 0, 0.9);
-            }
-           
+            }       
         }
-        li{
-            
+        li{      
             padding: 5px 0;
             font-size: 20px;
             margin-left: 50%;//100px;
             transform: translateX(-45%);
         }
     } 
-.selector {
-    text-align: center;
-    cursor: default;
-    .back_home {
-        display: block;
-        color: black;
-    }
-    .twitter {
-        display: block;
-        margin: 20px 17vw;
-        color: rgb(0, 110, 255);
-        
-        p img {
-            width: 35px;
-            margin: 0 auto;
-            background-color: rgba(0, 217, 255, 0.8);
-            padding: 7px;
+    
+    .selector {
+        text-align: center;
+        cursor: default;
+        .back_home {
+            display: block;
+            color: black;
         }
-    } 
-    button {
-        font-size: 30px;
-        color: rgb(29, 29, 29);
-        background-color:rgba(106, 208, 255, 0.3);
-        &:hover {
-            background-color:rgba(106, 208, 255, 0.6);
+        .twitter {
+            display: block;
+            margin: 20px 17vw;
+            color: rgb(0, 110, 255);   
+            p img {
+                width: 35px;
+                margin: 0 auto;
+                background-color: rgba(0, 217, 255, 0.8);
+                padding: 7px;
+            }
+        } 
+        button {
+            font-size: 30px;
+            color: rgb(29, 29, 29);
+            background-color:rgba(106, 208, 255, 0.3);
+            &:hover {
+                background-color:rgba(106, 208, 255, 0.6);
+            }
         }
     }
-}
 </style>
