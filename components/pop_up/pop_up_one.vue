@@ -16,22 +16,21 @@ import popUpName from '../pop_up/complete_pop/pop_up_name.vue';
 })
 export default class popUp extends Vue {
     store: string = "";
+
     mounted() {
         this.store = this.$store.state;
     }
-    
 }
 </script>
 <style lang="scss">
-#pop_up_one {
-    width: 80%;
-    position: absolute;
-    background-color: rgb(255, 195, 223);
-    margin: 350px 0;
-    top: 30%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 30px;
- 
-}
+    #pop_up_one {
+        width: 80%;
+        position: absolute;
+        background-color: rgb(255, 195, 223);
+        margin: 350px 0;
+        top: 30%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 30px;
+    }
 </style>
