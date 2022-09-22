@@ -92,13 +92,16 @@ export default class optionMyData extends Vue {
             title: '設定',
         }
     }
+
     beforeMount() {
         
         console.log('go mount');
         this.user_id_name[1] = this.$store.state.username;
         
     }
+
     mounted() {    
+
         this.$axios.get('get_id', {
             params: {
                 username: this.user_id_name[1],
@@ -110,10 +113,11 @@ export default class optionMyData extends Vue {
         })
         .catch((error) => {
             console.log(error);
-        })
+        });
     }
     
     CheckChangePassword(which: string) {
+
         let set_data = {
             username: this.user_id_name[1],
             password: this.password_data,
@@ -123,6 +127,7 @@ export default class optionMyData extends Vue {
             url: 'check_change_password',
             params: set_data,
         }
+
         if(which==="change") {
             if(this.new_password !== this.confirm_password) {
                 this.inconsistency = true;
@@ -168,10 +173,12 @@ export default class optionMyData extends Vue {
             console.log(err);
         });
     }
+
     checkReminder(index_num: number, yes_or_no: number) {
         if(this.required_num[index_num] === yes_or_no) {//同じだったら送信しない
             return;
         }
+
         this.$axios.put('post_reminder_update/' + this.user_id_name[0], {
             username: this.user_id_name[1],
             yes_no: yes_or_no,
@@ -180,7 +187,8 @@ export default class optionMyData extends Vue {
         .then((response) => {
             
             const reminder = response.data.update_reminder;
-            console.log(reminder)
+            console.log(reminder);
+
             if(reminder) {
                 if(this.required_num[index_num] === 0) {
                     this.required_num[index_num] = 1;
@@ -193,6 +201,7 @@ export default class optionMyData extends Vue {
             console.log(err);
         });
     }
+
     showContent(show_num: number) {
         if(this.now_num === show_num) {
             return;
@@ -203,6 +212,7 @@ export default class optionMyData extends Vue {
             this.confirm_password = "";
             this.show_info.splice(this.now_num, 1, false); //クリックしたコンテンツの初期化
         }
+
         this.success_change_password = false;
         
         reset_data();//データリセット
@@ -227,25 +237,26 @@ export default class optionMyData extends Vue {
                 const address_or_post_reminder = response.data.get_contents;
                 if(num === 0) {
                     this.accounts.splice(0, 2, { title: '登録メールアドレス', info: address_or_post_reminder},{ title: 'ユーザー名', info: this.user_id_name[1]});
-                
                 } else if(num === 2) {
                     for(let i=0; i < 2; i++) {
                         this.required_num.splice(i, 1, address_or_post_reminder[i].can_report);
                     }
                     console.log(address_or_post_reminder[1].can_report);
-                }
-            
+                }            
             })
             .catch((err) => {
                 console.log(err);
-            })
+            });
         }
+
         if(this.now_num === 0 || this.now_num === 2) {
             api_data(this.now_num);//api実行
         }
     }
+
     logout() {
         console.log(this.user_id_name[0]);
+
         this.$axios.delete('logout/' + this.user_id_name[0])
         .then((response) => {
             console.log(response.data)
@@ -262,7 +273,7 @@ export default class optionMyData extends Vue {
         })
         .catch((err) => {
             console.log(err);
-        })
+        });
     }
 }
 </script>
@@ -272,6 +283,7 @@ export default class optionMyData extends Vue {
     @content;
   }
 }
+
 #option_my_data {
     .password_show {
         position: absolute;
@@ -326,7 +338,6 @@ export default class optionMyData extends Vue {
             background-color: white;
         }
     }
-    
     .contents {
         position: absolute;
         left: 300px;
