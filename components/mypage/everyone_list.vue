@@ -17,19 +17,28 @@
 import { Vue, Component } from 'vue-property-decorator';
 @Component
 export default class everyone_list extends Vue {
-    contents_array: { id: number, picture:string | ArrayBuffer | null, my_comment: string, username: string, updated_at: string, can_see: number }[]
-                     = [];
+    contents_array: { 
+        id: number, 
+        picture:string | ArrayBuffer | null, 
+        my_comment: string, 
+        username: string, 
+        updated_at: string, 
+        can_see: number 
+        }[] = [];
     contents_num: number = 0;
     delete_back_button: boolean[] = [false];
     url: string | undefined;
+
     created() {
         this.getContents(0);
         console.log('in');
     }
+
     mounted() {
         this.url = process.env.SERVER_URL;
         console.log(this.url);
     }
+
     public getContents = (num: number) => {
         this.$axios.get('pull_all', {
             params: {
@@ -47,10 +56,16 @@ export default class everyone_list extends Vue {
                 //日付だけ表示
                 const new_date = all_data[i].updated_at.split('T').splice(0, 1);
                 const image = base_url + all_data[i].picture;
-                let push_item = { id: all_data[i].id, picture: image, my_comment: all_data[i].my_comment,  username: all_data[i].username, updated_at: new_date[0], can_see: 0};
+                let push_item = { 
+                    id: all_data[i].id, 
+                    picture: image, 
+                    my_comment: all_data[i].my_comment,  
+                    username: all_data[i].username, 
+                    updated_at: new_date[0], 
+                    can_see: 0
+                };
                 this.contents_array.push(push_item);
             }
-  
         })
         .catch((error) => {
             console.log(error);
