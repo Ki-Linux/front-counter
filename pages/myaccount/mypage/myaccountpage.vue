@@ -25,7 +25,6 @@
                 </li>
             </ul>
         </div>
-        
         <div class="option">
             <ul>
                 <li>
@@ -70,6 +69,7 @@ export default class myname extends Vue {
       title: 'マイページ'
     }
   }
+
   beforeMount() {
         
     const account_name = String(this.$route.query.myname);
@@ -77,12 +77,15 @@ export default class myname extends Vue {
     this.$store.dispatch("planSelect_arrayDelete", account_name);
         
   }
+
   popShow(value: boolean) {
     this.show_pop = value;
   }
+
   toAlbum() {//アルバムへ
     this.$router.push('/myaccount/mypage/album_select/my_album');
   }
+
   toSelectPage() {
     this.show_pop = true;
   }
@@ -100,55 +103,52 @@ li {
     list-style: none;
 }
 
- .to_album {
-    float: left;
-    margin: 20px 0 0 40px;
-    font-size: 19px;
-    button {
-      background-color: beige;
-    }
+.to_album {
+  float: left;
+  margin: 20px 0 0 40px;
+  font-size: 19px;
+  button {
+    background-color: beige;
   }
+}
+
 .up_down_button {
     
-    text-align: center;
-    font-size: 50px;
-    button {
-      padding: 10px 30px;
-      margin-right: 20px;
-      background-color: rgb(236, 236, 236);
-      color: rgb(29, 104, 0);
+  text-align: center;
+  font-size: 50px;
+  button {
+    padding: 10px 30px;
+    margin-right: 20px;
+    background-color: rgb(236, 236, 236);
+    color: rgb(29, 104, 0);
 
-      @include sp {
-        margin-top:20px;
-        font-size: 25px;
-      }
-    
-    }
-    ul li {
-      font-size: 30px;
-      &:first-of-type span {
-        color: rgb(104, 0, 0);
-        font-weight: bold;
-      }
-      &:last-of-type span {
-        color: rgb(0, 0, 104);
-        font-weight: bold;
-      }
-
-      @include sp {
-
-        padding: 20px;
-        font-size: 25px;
-      }
+    @include sp {
+      margin-top:20px;
+      font-size: 25px;
     }
     
+  }
+  ul li {
+    font-size: 30px;
+    &:first-of-type span {
+      color: rgb(104, 0, 0);
+      font-weight: bold;
+    }
+    &:last-of-type span {
+      color: rgb(0, 0, 104);
+      font-weight: bold;
+    }
+
+    @include sp {
+      padding: 20px;
+      font-size: 25px;
+    }
+  }
 }
 
 .option {
   font-size: 25px;
-  
   ul li {
-    
     padding: 10px 0;
     .editor {
       color: rgb(0, 62, 73);
@@ -163,7 +163,6 @@ li {
   margin-top: -140px;
   padding: 30px;
   @include sp {
-
     margin-top: -50px;
   }
 }
