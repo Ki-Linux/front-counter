@@ -52,7 +52,7 @@ export default class change_profile extends Vue {
     send_icon: any;
     change_data = [
         { 
-            show_data: false,//img
+            show_data: false,//image
             img_name_comment: require("@/static/profile/default_img.png"),  
             judge_number: 1
         },
@@ -71,11 +71,13 @@ export default class change_profile extends Vue {
         return {
             title: 'プロフィール編集'
         }
-    }
+    };
+
     send_image() {
         const formData = new FormData();
         formData.append('file', this.send_icon);
         formData.append('userId', String(this.send_userId));
+
         this.$axios.post('img_account_post', formData)
         .then((response) => {
             console.log(response.data);
@@ -88,7 +90,7 @@ export default class change_profile extends Vue {
         })
         .catch((err) => {
             console.log(err);
-        })
+        });
     }
  
     sendData(value: string) {
@@ -105,6 +107,7 @@ export default class change_profile extends Vue {
         this.change_data[0].show_data = false;
         
     }
+
     emitId(value:{ id: number, icon: string, comment: string }) {
         console.log(value);
         console.log(value.id + 'ui');
@@ -118,6 +121,7 @@ export default class change_profile extends Vue {
         
         this.change_data[2].img_name_comment = value.comment;
     }
+
     changeIcon(e: Event) {
         const file = (<HTMLInputElement>e.target).files![0];
         this.send_icon = file;
@@ -128,7 +132,9 @@ export default class change_profile extends Vue {
         })
         reader.readAsDataURL(file);
     }
+
     changeComment() {
+
         this.edit_contents = true;
         for(let i=0; i < 3; i++) {
             if(i === 2) {
@@ -136,9 +142,9 @@ export default class change_profile extends Vue {
                 return;
             }
             this.change_data[i].show_data = false;
-        }
-        
+        }  
     }
+
     goChange() {
         let change_content: string = "";//送るデータ
         let judge_number: number = 3;//送る番号
@@ -160,7 +166,9 @@ export default class change_profile extends Vue {
                 }
             }
         }
+
         console.log(this.send_userId);
+
         this.$axios.put('account_update/' + this.send_userId, {
             changeContent: change_content, 
             judgeNumber: judge_number,
@@ -202,6 +210,7 @@ export default class change_profile extends Vue {
         text-align: center;
         padding: 30px 0;
     }
+
     .edit_profile {
         input {
             -webkit-appearance: none;
@@ -222,13 +231,11 @@ export default class change_profile extends Vue {
             margin: 30px auto;
         }
         .center {
-            
             margin-top: 20px;
             input[type="text"] {
                 padding: 5px;
                 font-size: 30px;
-            }
-      
+            }   
             #message_add {
                 padding: 5px;
                 height: 7rem;
@@ -242,8 +249,7 @@ export default class change_profile extends Vue {
             background-color: whitesmoke;
         }
     }
-    .my_data_edit {
-        
+    .my_data_edit {       
         .my_data {
             display: inline-block;
             margin-left: 50%;
@@ -266,7 +272,6 @@ export default class change_profile extends Vue {
                     font-size: 20px;
                     float: left;
                     padding: 10px;
-  
                 }
             } 
         }
@@ -275,6 +280,7 @@ export default class change_profile extends Vue {
             text-align: center;
         }
     }
+    
     #profile {
         margin-left: 50%;
         transform: translateX(-50%);
