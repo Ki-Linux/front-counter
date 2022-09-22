@@ -1,18 +1,18 @@
 <template>
     <div id="free_login">
         <div class="label">
-            <top_label/>           
+            <top_label/><!-- topのラベル-->           
         </div>
         <div class="pop_up">
-            <pop_up/>
+            <pop_up/><!-- ポップアップの表示-->   
         </div>
         <div class="contents">
             <div class="over">
-                <target_number/>
+                <target_number/><!-- 目標値と現在値 -->
             </div>
             <div class="under">
-                <bord_up/>
-                <calculation/>
+                <bord_up/><!--　ボード -->
+                <calculation/><!-- ボードの中の数値 -->
             </div>    
         </div>
     </div>
@@ -48,9 +48,11 @@
     html {
         background-color: white;
     }
+
     #free_login .pop_up {
         padding-top: 5px;
     }
+
     .contents .over,.under {
         display: flex;
     }
