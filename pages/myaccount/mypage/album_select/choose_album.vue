@@ -52,6 +52,12 @@ export default class chooseAlbum extends Vue {
     written_name: string = "";
     attention: string = "";
     show_next_img: boolean = true;
+    head() {
+        return {
+            title: 'アルバム',
+        }
+    }
+
     delete_data = () => {
         const array_image = [];
         const store = this.$store.state;
@@ -64,6 +70,7 @@ export default class chooseAlbum extends Vue {
         }
         const formData = new FormData();
         formData.append('delete_image', String(array_image));
+
         this.$axios.post('storage_counter_delete', formData)
         .then((response) => {
             console.log(response.data);
@@ -72,11 +79,7 @@ export default class chooseAlbum extends Vue {
             console.log(err);
         });
     };
-    head() {
-        return {
-            title: 'アルバム',
-        }
-    }
+
     mounted() {
         const store = this.$store.state;
         const back_data = store.back_data;
@@ -94,11 +97,12 @@ export default class chooseAlbum extends Vue {
                 this.send_sql_image = data;
             }
         } 
-    
     }
-    deleteGo() {
+
+    deleteGo() {//データを消す
         this.delete_data();
     }
+
     nextImg(num: number) {
         const server = process.env.SERVER_URL;
         const url = server;
@@ -123,6 +127,7 @@ export default class chooseAlbum extends Vue {
         this.send_sql_image = image;
         this.img_data = url + this.send_sql_image;
     }
+
     editImg(e: Event) {
         this.show_next_img = false;
         const  file = (<HTMLInputElement>e.target).files![0];
@@ -138,47 +143,49 @@ export default class chooseAlbum extends Vue {
         reader.readAsDataURL(file);
         
     }
+
     postData() {
         if(this.written_name === "" || this.img_data  === require('@/static/edit/hatena.png')){
             this.attention = "タイトルまたは画像がありません。";
             return;
         }
         const store_data = this.$store.state;
-            const formData = new FormData();
-            const first_parameter = [
-                'username', 
-                'selector', 
-                'target', 
-                'present', 
-                'title', 
-                'file', 
-                'default_or_selected', 
-            ];
-            const second_parameter = [
-                store_data.username, 
-                store_data.back_data[0], 
-                store_data.back_data[1], 
-                store_data.back_data[2], 
-                this.written_name, 
-                this.send_image[0], 
-                this.send_image[1], 
-            ];
-            for(let i=0; i < first_parameter.length; i++) {
-                formData.append(first_parameter[i], second_parameter[i]);
+        const formData = new FormData();
+        const first_parameter = [
+            'username', 
+            'selector', 
+            'target', 
+            'present', 
+            'title', 
+            'file', 
+            'default_or_selected', 
+        ];
+        const second_parameter = [
+            store_data.username, 
+            store_data.back_data[0], 
+            store_data.back_data[1], 
+            store_data.back_data[2], 
+            this.written_name, 
+            this.send_image[0], 
+            this.send_image[1], 
+        ];
+        for(let i=0; i < first_parameter.length; i++) {
+            formData.append(first_parameter[i], second_parameter[i]);
+        }
+        console.log(formData);
+
+        this.$axios.post('album_data', formData)
+        .then((response) => {
+            const data = response.data;
+            console.log(data);
+            if(data == 1) {
+                this.delete_data();
+                this.$router.push('/myaccount/mypage/myaccountpage?myname=' + store_data.username);
             }
-            console.log(formData);
-            this.$axios.post('album_data', formData)
-            .then((response) => {
-                const data = response.data;
-                console.log(data);
-                if(data == 1) {
-                    this.delete_data();
-                    this.$router.push('/myaccount/mypage/myaccountpage?myname=' + store_data.username);
-                }
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+        })
+        .catch((err) => {
+            console.log(err);
+        });
     }
 }
 </script>
@@ -200,8 +207,7 @@ export default class chooseAlbum extends Vue {
     @include sp {
         padding: 50px 20px;
     }
-    .to_next {
-        
+    .to_next {     
         .not_album {
             float: right;
             font-size: 20px;
@@ -239,10 +245,8 @@ export default class chooseAlbum extends Vue {
         }
     } 
     .img_box {
-        
         padding: 30px 0;
-        
-        
+
         .show_img {
             img{
                 position: relative;
@@ -288,8 +292,8 @@ export default class chooseAlbum extends Vue {
             }
         }
     }
+
     .submit_button {
-        
         button {
             font-size: 25px;
             background-color: aliceblue;
