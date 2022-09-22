@@ -23,7 +23,8 @@
     export default class calculationComplete extends Vue {
         up_down(selection: string) {//increase number
             const countUpDown = (select: string) => {
-                this.$store.dispatch("UpDownNumber", [select, true]);//+-1 　freeプラン以外のときに+-1ではなく選択肢表示
+                //+-1 freeプラン以外のときに+-1ではなく選択肢表示
+                this.$store.dispatch("UpDownNumber", [select, true]);
             }
             const state_data = this.$store.state;
             const data_zero = state_data.back_data[0];
@@ -39,30 +40,25 @@
                 
             }
         }
+
         addCount(selection: string) {//data reset with vuex
             if(this.$store.state.canClick && confirm("数字をリセットしますか？")) {
-                this.$store.dispatch("UpDownNumber", selection);
-                
+                this.$store.dispatch("UpDownNumber", selection);         
             }
         }
     }
 </script>
 <style lang="scss">
-    #calculation_complete {
-        
+    #calculation_complete {     
         width: 30vw;
         background-color: rgba(255, 0, 0, 0.253);
-        padding-top: 50px;
-        
-        .count button {
-            
+        padding-top: 50px;   
+        .count button {        
             &:nth-of-type(3) {
                 margin-top: 10px;
                 -webkit-appearance: none;
                 background-color:rgb(238, 238, 238);
-            }
-            
-        }
-        
+            }         
+        }     
     }
 </style>
