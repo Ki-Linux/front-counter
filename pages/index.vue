@@ -54,8 +54,12 @@
             <caption>みんなの投稿一覧</caption>
             <tbody>
             <tr v-for="(show_every_data, index) in showEveryData" :key="index">
-              <th v-if="show_every_data.picture === url + 'notImg'">画像なし</th>
-              <th v-else><img :src="show_every_data.picture" alt="picture"></th>
+              <th v-if="show_every_data.picture === url + 'notImg'">
+                画像なし
+              </th>
+              <th v-else>
+                <img :src="show_every_data.picture" alt="picture">
+              </th>
               <td>{{ show_every_data.my_comment }}</td>
             </tr>
             </tbody>
@@ -64,9 +68,21 @@
       </main>
       <footer>
         <ul>
-          <li><nuxt-link class="next" to="/under_contents/rule?name=terms_of_use">利用規約</nuxt-link></li>
-          <li><nuxt-link class="next" to="/under_contents/rule?name=privacy_policy">プライバシーポリシー</nuxt-link></li>
-          <li><nuxt-link class="next" to="/under_contents/contact">お問い合わせ</nuxt-link></li>
+          <li>
+            <nuxt-link class="next" to="/under_contents/rule?name=terms_of_use">
+              利用規約
+            </nuxt-link>
+          </li>
+          <li>
+            <nuxt-link class="next" to="/under_contents/rule?name=privacy_policy">
+              プライバシーポリシー
+            </nuxt-link>
+          </li>
+          <li>
+            <nuxt-link class="next" to="/under_contents/contact">
+              お問い合わせ
+            </nuxt-link>
+          </li>
         </ul>
       </footer>
     </div>
@@ -75,17 +91,17 @@
 import { Vue, Component } from 'nuxt-property-decorator';
 @Component
 export default class Home extends Vue{
-  logins: { showed_data: string, to_url: string }[] = [ 
+  logins: { showed_data: string, to_url: string }[] = [//ログイン,新規登録,お問い合わせのリンク表示
     { showed_data: "ログイン", to_url: "/addInfo/login" },
     { showed_data: "新規登録", to_url: "/addInfo/new_account" },
     { showed_data: "お問い合わせ", to_url: "/under_contents/contact" },
   ];
-  url_change: string = require("../static/Home/selector_box.png");
+  url_change: string = require("../static/Home/selector_box.png");//UIの画像を変える
   change_box: boolean = true;//urlの変更
   show_section: boolean = false; //ログイン欄の表示(true==表示,false==非表示)
-  showEveryData: { picture: string|ArrayBuffer|null, my_comment: string }[] = [];
-  url: string|undefined;
-  head() {
+  showEveryData: { picture: string|ArrayBuffer|null, my_comment: string }[] = [];//みんなの投稿
+  url: string|undefined;//URL
+  head() {//タイトル
     return {
       title: 'プラマイカウンター',
       titleTemplate: null,
@@ -93,11 +109,14 @@ export default class Home extends Vue{
   }
     
   created() {
+
     this.url = process.env.SERVER_URL;
     this.$axios.get('only_top')
     .then((response) => {
+
       console.log(response.data.topData);
       const topData = response.data.topData;
+
       for(let i=0; i < topData.length; i++) {
         const image = this.url + topData[i].picture;
         const push_data = {picture: image, my_comment: topData[i].my_comment};
@@ -109,17 +128,23 @@ export default class Home extends Vue{
     });
 
   }
+
   mounted() {
     //localStorageのデータを削除
     this.$store.dispatch("delete_contents", "many");
   }
+
   tryLogin(login_num: number) {
+
     const name = this.$store.state.username;
+
     if(login_num === 0 && name !== "") {
+
       const cookie = document.cookie;
       const only_first = cookie.split('%');
       console.log(only_first);
       const send_data = only_first[0].slice(25);
+
       this.$axios.get('confirm_token', {
         params: {
           username: name,
@@ -127,10 +152,12 @@ export default class Home extends Vue{
         }
       })
       .then((response) => {
+
         console.log(response.data);
         const which_num = response.data;
         console.log('yes');
         console.log(which_num.true_or_false);
+
         if(which_num.true_or_false === true) {
           this.$router.push('/myaccount/mypage/myaccountpage?myname=' + name);
         } else {
@@ -145,6 +172,7 @@ export default class Home extends Vue{
   }
     
   changeBox() {//2つの画像の変更の繰り返し
+
     if(this.change_box == true) {
       //開くに変更
       this.url_change = require("../static/Home/close_selection.png"); 
@@ -181,6 +209,7 @@ export default class Home extends Vue{
     padding-top: 0;
     background-color:rgba(255, 250, 240, 0.6);
   }
+
   nav {//トップ画面
     z-index: 10;
     width: 100%;
@@ -197,11 +226,11 @@ export default class Home extends Vue{
       &:hover {
         background-color: rgba(17, 63, 75, 0.76);
       }
-
       @include sp {
         font-size: 15px;
       }
     }
+
     p {
       color: white;
       padding-right: 10px;
@@ -225,6 +254,7 @@ export default class Home extends Vue{
     transform: translateY(-5px);
     opacity: 0;
   } 
+
   header {
       position: absolute;//fixed
       right: 0;
@@ -232,7 +262,6 @@ export default class Home extends Vue{
       background-color: rgba(6, 66, 77, 0.514);
       width: 200px;
       margin: 0 0 0 auto;
-      
       .link {
             display: block;
             text-decoration: none;
@@ -246,8 +275,10 @@ export default class Home extends Vue{
       }
     }
   }
+
   main {
     text-align: center;
+
     .top_container {
       margin-top: 100px;
       h1 {
@@ -263,6 +294,7 @@ export default class Home extends Vue{
           color: rgba(19, 19, 223, 0.7);
         }
       }
+
       .description {
         margin: 110px;
         border: 3px double #ddd;
@@ -311,6 +343,7 @@ export default class Home extends Vue{
       
       }
     }
+
     .center_container {
       background: linear-gradient(to right, rgba(255, 12, 12, 0.6) 0%, rgba(255, 60, 60, 0.6) 50%, rgba(0, 132, 255, 0.3) 50%, rgba(0, 132, 255, 0.3) 100%);
       padding-bottom: 50px;
@@ -318,7 +351,6 @@ export default class Home extends Vue{
       .title_change {  
         display: inline-block;
         width: 100%;
-        
         p {
           padding: 30px 0;
           float: left;
@@ -334,11 +366,11 @@ export default class Home extends Vue{
       .img_show {
         display: flex;
         justify-content: space-around;
-        
         p {
           flex-basis: 40%;
         }
       }
+
       .title_change {
         display: inline-block;
         width: 100%;
@@ -360,6 +392,7 @@ export default class Home extends Vue{
       }
     }
     .footer_container {
+
       background-color: rgba(60, 133, 94, 0.7);
       margin: 60px auto;
       width: 40%;
@@ -397,7 +430,6 @@ export default class Home extends Vue{
         }
       }
       td {
-     
         word-break: normal;
         width: 60%;
         @include pc {
@@ -408,6 +440,7 @@ export default class Home extends Vue{
      
     }
   }
+
   footer {
     height: 250px;
     background-color: rgba(0, 9, 90, 0.7);
@@ -432,6 +465,7 @@ export default class Home extends Vue{
      
     }
   }
+
   li {
     list-style: none;
     
