@@ -1,5 +1,3 @@
-
-  
 <template>
     <div id="new_account">
         <div class="title">
@@ -8,22 +6,30 @@
         <form class="write_in" @submit.prevent="toNext">
             <div class="label_height">
                 <label for="mail">メールアドレス</label>
-                <p><input type="email" v-model="mail" name="mail" required></p>   
+                <p>
+                    <input type="email" v-model="mail" name="mail" required>
+                </p>   
             </div>
             <div class="label_height">
                 <label for="name">ユーザーネーム</label>
-                 <p><input type="text" v-model="username" name="username" maxlength="9" required></p> 
+                 <p>
+                    <input type="text" v-model="username" name="username" maxlength="9" required>
+                </p> 
             </div>
             <div class="label_height">
                 <label for="password">パスワード<br/><span>7~14文字</span></label>
-                 <p><input type="password" v-model="password" name="password" minlength="7" maxlength="14" required></p> 
+                 <p>
+                    <input type="password" v-model="password" name="password" minlength="7" maxlength="14" required>
+                </p> 
             </div>
             <div class="label_height">
                 <label for="password_again">
                     もう一度パスワード<br/>
                     <span>7~14文字</span>
                 </label>
-                <p><input type="password" v-model="password_again" name="password_again" minlength="7" maxlength="14" required></p> 
+                <p>
+                    <input type="password" v-model="password_again" name="password_again" minlength="7" maxlength="14" required>
+                </p> 
             </div>
             <div class="label_height">
                 <p>{{ warning }}</p>
@@ -34,7 +40,6 @@
 </template>
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
-//import $cookies from 'cookie-universal-nuxt';
 @Component
 export default class newAccount extends Vue {
     mail:string = "";
@@ -46,10 +51,15 @@ export default class newAccount extends Vue {
         return {
             title: '新規登録',
             meta: [
-                { hid: 'description', name: 'description', content: 'プラマイカウンターの新規登録になります。こちらからご登録して初めてみてください。' }
+                { 
+                    hid: 'description', 
+                    name: 'description', 
+                    content: 'プラマイカウンターの新規登録になります。こちらからご登録して初めてみてください。' 
+                }
             ]
         }
     }
+
     toNext():void {
         const can_save_data = () => {
             this.$axios.post("saving", {
@@ -73,44 +83,43 @@ export default class newAccount extends Vue {
                 console.log(err);
             });
         }
+
         if(this.password === this.password_again) {
             can_save_data();
         } else {
             this.warning = "パスワードが一致していません。";
-        }
-       
+        }      
     }
 }
 </script>
 <style lang="scss">
-#new_account {
-    margin-top: 30px;
-    font-size: 30px;
-    text-align: center;
-    .title {
+    #new_account {
         margin-top: 30px;
-        h1 {
-            font-size: 40px;
-            color:rgb(121, 121, 121);
+        font-size: 30px;
+        text-align: center;
+        .title {
+            margin-top: 30px;
+            h1 {
+                font-size: 40px;
+                color:rgb(121, 121, 121);
+            }
         }
-    }
-    .label_height {
-        margin: 30px;
-        
-        p input {
-            width: 300px;
-            padding: 5px;
+        .label_height {
+            margin: 30px; 
+            p input {
+                width: 300px;
+                padding: 5px;
+            }   
+            input[type="submit"] {
+                -webkit-appearance: none;
+                color: rgb(36, 36, 36);
+                background-color: rgb(197, 197, 197);
+                margin-bottom: 20px;
+            }
         }
-        input[type="submit"] {
-            -webkit-appearance: none;
-            color: rgb(36, 36, 36);
-            background-color: rgb(197, 197, 197);
-            margin-bottom: 20px;
-        }
-    }
 
-    label {
-        color:rgb(85, 85, 85);
+        label {
+            color:rgb(85, 85, 85);
+        }
     }
-}
 </style>
