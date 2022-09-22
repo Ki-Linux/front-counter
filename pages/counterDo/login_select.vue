@@ -32,6 +32,7 @@
             }
             
         }
+
         toPage(index: number) {
             const to_url = (url: string) => {
                 this.$router.push(url);
@@ -53,6 +54,7 @@
     #login_select {
         padding: 100px 0;
     }
+
     .select_button {
         font-size: 20px;
         padding: 40px 20px;
@@ -67,11 +69,13 @@
             background-color:rgb(238, 238, 238);
         }
     }
+
     .styleClass {/*上*/
         background-color: rgba(200, 255, 0, 0.5);
         margin-bottom: 100px;
                 
     }
+    
     .styleClassBottom {/*下*/
         background-color: rgba(0, 225, 255, 0.5);
         
