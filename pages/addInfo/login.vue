@@ -66,7 +66,7 @@ export default class login extends Vue {
                 
                 if(this.$store.state.username !== "") {
                     let param_url: string = '/myaccount/mypage/myaccountpage?myname=' + username;
-                    if(this.$route.query.id === "1" && this.$store.state.back_data.length > 0) {
+                    if(this.$store.state.back_data.length > 0) {
                         param_url = '/myaccount/mypage/edit/editNum?contents=new_post';
                     }
 
