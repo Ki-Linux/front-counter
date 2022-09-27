@@ -3,9 +3,9 @@
 
 ゲストユーザーとして
 
-メールアドレスを(guest@gmail.com),
+メールアドレス：guest@gmail.com
 
-パスワードを(guestguest)
+パスワード：guestguest
 
 としてログインしてください。
 
