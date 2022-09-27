@@ -1,5 +1,6 @@
 # プラマイカウンター
-[こちらがリンクとなります。](https://plusminuscounter.com).
+[こちらがリンクとなります。](https://plusminuscounter.com)
+
 ゲストユーザーとして
 
 メールアドレスを(guest@gmail.com),
